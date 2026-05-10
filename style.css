@@ -270,3 +270,60 @@ section[id] {
   .about-grid { grid-template-columns: 1fr; gap: 2rem; }
   .about-portrait img { max-width: 280px; margin: 0 auto; }
 }
+
+/* === Education === */
+.education {
+  position: relative;
+  background: var(--color-section-alt);
+  padding: 6rem 0 calc(var(--wave-height) + 4rem);
+}
+.education-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+.edu-card {
+  background: #fff;
+  border-radius: 6px;
+  padding: 2rem;
+  box-shadow: 0 2px 16px rgba(27, 79, 114, 0.07);
+  border-top: 3px solid var(--color-accent);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.edu-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 28px rgba(27, 79, 114, 0.12);
+}
+.edu-year {
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: var(--color-accent);
+  text-transform: uppercase;
+}
+.edu-degree {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  color: var(--color-primary);
+  margin: 0.5rem 0 0.25rem;
+  line-height: 1.3;
+}
+.edu-institution {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text);
+  margin-bottom: 0.75rem;
+}
+.edu-detail {
+  font-size: 0.875rem;
+  color: var(--color-text);
+  opacity: 0.75;
+  line-height: 1.6;
+}
+
+@media (max-width: 900px) {
+  .education-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 540px) {
+  .education-grid { grid-template-columns: 1fr; }
+}

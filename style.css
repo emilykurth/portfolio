@@ -224,3 +224,49 @@ section[id] {
   transition: color 0.2s;
 }
 .hero-arrow:hover { color: #fff; }
+
+/* === About === */
+.about {
+  position: relative;
+  background: var(--color-bg);
+  padding: 6rem 0 calc(var(--wave-height) + 4rem);
+}
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 4rem;
+  align-items: center;
+}
+.about-portrait img {
+  border-radius: 4px;
+  width: 100%;
+  object-fit: cover;
+  box-shadow: 0 12px 40px rgba(27, 79, 114, 0.15);
+}
+.about-bio {
+  color: var(--color-text);
+  line-height: 1.8;
+  margin-bottom: 1.25rem;
+  opacity: 0.9;
+}
+.btn-primary {
+  display: inline-block;
+  margin-top: 0.75rem;
+  padding: 0.75rem 2rem;
+  background: var(--color-primary);
+  color: #fff;
+  border-radius: 3px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  transition: background 0.2s, transform 0.15s;
+}
+.btn-primary:hover {
+  background: var(--color-accent);
+  transform: translateY(-1px);
+}
+
+@media (max-width: 768px) {
+  .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .about-portrait img { max-width: 280px; margin: 0 auto; }
+}

@@ -34,8 +34,18 @@ filterBtns.forEach(btn => {
     const filter = btn.dataset.filter;
     portfolioCards.forEach(card => {
       const match = filter === 'all' || card.dataset.category === filter;
-      card.style.display = match ? '' : 'none';
+      card.classList.toggle('hidden', !match);
     });
+  });
+});
+
+// --- Keyboard access for portfolio cards ---
+document.querySelectorAll('.portfolio-card').forEach(card => {
+  card.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      openLightbox(card);
+    }
   });
 });
 

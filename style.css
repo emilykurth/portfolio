@@ -408,6 +408,11 @@ section[id] {
   line-height: 1.25;
 }
 
+/* Filter hidden state */
+.portfolio-card.hidden {
+  display: none;
+}
+
 @media (max-width: 900px) {
   .portfolio-grid { grid-template-columns: repeat(2, 1fr); }
 }

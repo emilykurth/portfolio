@@ -115,7 +115,127 @@
         </svg>
       </div>
     </section>
-    <section class="portfolio" id="portfolio"></section>
+    <section class="portfolio" id="portfolio">
+      <div class="container">
+        <p class="section-label">My Work</p>
+        <h2 class="section-title">Portfolio</h2>
+        <p class="section-subtitle">A selection of recent projects</p>
+
+        <div class="portfolio-filters">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="illustration">Illustration</button>
+          <button class="filter-btn" data-filter="graphic-design">Graphic Design</button>
+          <button class="filter-btn" data-filter="branding">Branding</button>
+        </div>
+
+        <div class="portfolio-grid">
+          <!-- REPLACE: Swap src, data-title, data-description for real work -->
+          <div class="portfolio-card" data-category="illustration"
+               data-title="Ocean Depths"
+               data-description="A digital illustration exploring the luminous world beneath the ocean surface."
+               onclick="openLightbox(this)">
+            <img src="https://placehold.co/600x450/48C9B0/1B4F72?text=Illustration+1" alt="Ocean Depths">
+            <div class="card-overlay">
+              <span class="card-tag">Illustration</span>
+              <h3 class="card-title">Ocean Depths</h3>
+            </div>
+          </div>
+
+          <div class="portfolio-card" data-category="illustration"
+               data-title="Tide Pool"
+               data-description="Gouache-style illustration of a Pacific coast tide pool with anemones and starfish."
+               onclick="openLightbox(this)">
+            <img src="https://placehold.co/600x450/5dade2/1B4F72?text=Illustration+2" alt="Tide Pool">
+            <div class="card-overlay">
+              <span class="card-tag">Illustration</span>
+              <h3 class="card-title">Tide Pool</h3>
+            </div>
+          </div>
+
+          <div class="portfolio-card" data-category="illustration"
+               data-title="Storm at Sea"
+               data-description="Editorial illustration depicting a dramatic sea storm in muted ink and wash tones."
+               onclick="openLightbox(this)">
+            <img src="https://placehold.co/600x450/1B4F72/48C9B0?text=Illustration+3" alt="Storm at Sea">
+            <div class="card-overlay">
+              <span class="card-tag">Illustration</span>
+              <h3 class="card-title">Storm at Sea</h3>
+            </div>
+          </div>
+
+          <div class="portfolio-card" data-category="graphic-design"
+               data-title="Wave Brand System"
+               data-description="Typography-driven brand system built around fluid wave forms for a coastal lifestyle brand."
+               onclick="openLightbox(this)">
+            <img src="https://placehold.co/600x450/48C9B0/0d2233?text=Graphic+Design+1" alt="Wave Brand System">
+            <div class="card-overlay">
+              <span class="card-tag">Graphic Design</span>
+              <h3 class="card-title">Wave Brand System</h3>
+            </div>
+          </div>
+
+          <div class="portfolio-card" data-category="graphic-design"
+               data-title="Coastal Magazine Layout"
+               data-description="Editorial layout design for a travel magazine feature on coastal communities."
+               onclick="openLightbox(this)">
+            <img src="https://placehold.co/600x450/5dade2/0d2233?text=Graphic+Design+2" alt="Coastal Magazine Layout">
+            <div class="card-overlay">
+              <span class="card-tag">Graphic Design</span>
+              <h3 class="card-title">Coastal Magazine Layout</h3>
+            </div>
+          </div>
+
+          <div class="portfolio-card" data-category="graphic-design"
+               data-title="Sea Glass Poster"
+               data-description="Hand-lettered event poster with sea glass color palette for an ocean conservation fundraiser."
+               onclick="openLightbox(this)">
+            <img src="https://placehold.co/600x450/1B4F72/EAF4F4?text=Graphic+Design+3" alt="Sea Glass Poster">
+            <div class="card-overlay">
+              <span class="card-tag">Graphic Design</span>
+              <h3 class="card-title">Sea Glass Poster</h3>
+            </div>
+          </div>
+
+          <div class="portfolio-card" data-category="branding"
+               data-title="Harbor Coffee Co."
+               data-description="Full brand identity for an independent coffee roaster with a maritime heritage theme."
+               onclick="openLightbox(this)">
+            <img src="https://placehold.co/600x450/48C9B0/1B4F72?text=Branding+1" alt="Harbor Coffee Co.">
+            <div class="card-overlay">
+              <span class="card-tag">Branding</span>
+              <h3 class="card-title">Harbor Coffee Co.</h3>
+            </div>
+          </div>
+
+          <div class="portfolio-card" data-category="branding"
+               data-title="Blue Pearl Spa"
+               data-description="Luxury spa brand identity including logo, color system, and packaging design."
+               onclick="openLightbox(this)">
+            <img src="https://placehold.co/600x450/5dade2/1B4F72?text=Branding+2" alt="Blue Pearl Spa">
+            <div class="card-overlay">
+              <span class="card-tag">Branding</span>
+              <h3 class="card-title">Blue Pearl Spa</h3>
+            </div>
+          </div>
+
+          <div class="portfolio-card" data-category="branding"
+               data-title="Maritime Goods"
+               data-description="Rugged coastal lifestyle brand identity for an outdoor and marine goods retailer."
+               onclick="openLightbox(this)">
+            <img src="https://placehold.co/600x450/1B4F72/48C9B0?text=Branding+3" alt="Maritime Goods">
+            <div class="card-overlay">
+              <span class="card-tag">Branding</span>
+              <h3 class="card-title">Maritime Goods</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="section-wave">
+        <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0,40 C360,0 1080,60 1440,20 L1440,60 L0,60 Z" fill="#1B4F72"/>
+        </svg>
+      </div>
+    </section>
     <section class="contact" id="contact"></section>
   </main>
 

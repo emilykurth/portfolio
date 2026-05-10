@@ -544,3 +544,11 @@ section[id] {
   color: rgba(255, 255, 255, 0.35);
   letter-spacing: 0.05em;
 }
+
+/* === Mobile adjustments === */
+@media (max-width: 768px) {
+  .about    { padding: 4rem 0 calc(var(--wave-height) + 3rem); }
+  .education { padding: 4rem 0 calc(var(--wave-height) + 3rem); }
+  .portfolio { padding: 4rem 0 calc(var(--wave-height) + 3rem); }
+  .contact  { padding: 4rem 0; }
+}

@@ -38,3 +38,28 @@ filterBtns.forEach(btn => {
     });
   });
 });
+
+// --- Lightbox ---
+function openLightbox(card) {
+  const lightbox = document.getElementById('lightbox');
+  document.getElementById('lightboxImg').src = card.querySelector('img').src;
+  document.getElementById('lightboxImg').alt = card.dataset.title;
+  document.getElementById('lightboxTag').textContent = card.querySelector('.card-tag').textContent;
+  document.getElementById('lightboxTitle').textContent = card.dataset.title;
+  document.getElementById('lightboxDesc').textContent = card.dataset.description;
+  lightbox.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('lightbox').addEventListener('click', e => {
+  if (e.target === e.currentTarget) closeLightbox();
+});
+document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeLightbox();
+});

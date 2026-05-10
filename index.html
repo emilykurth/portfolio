@@ -240,7 +240,17 @@
   </main>
 
   <footer class="footer" id="footer"></footer>
-  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Project details"></div>
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Project details">
+    <div class="lightbox-inner">
+      <button class="lightbox-close" id="lightboxClose" aria-label="Close lightbox">&times;</button>
+      <img src="" alt="" id="lightboxImg" class="lightbox-img">
+      <div class="lightbox-info">
+        <span class="card-tag" id="lightboxTag"></span>
+        <h3 class="lightbox-title" id="lightboxTitle"></h3>
+        <p class="lightbox-desc" id="lightboxDesc"></p>
+      </div>
+    </div>
+  </div>
 
   <script src="main.js"></script>
 </body>

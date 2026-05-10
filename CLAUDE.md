@@ -2,6 +2,15 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Git Operations
+
+Always ask for explicit permission before running any of these commands:
+- `git add` / staging files
+- `git commit`
+- `git push`
+
+Do not stage, commit, or push without first confirming with the user.
+
 ## Running the Site
 
 No build step. Open `index.html` directly in a browser, or serve locally:

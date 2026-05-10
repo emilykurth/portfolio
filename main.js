@@ -63,3 +63,19 @@ document.getElementById('lightboxClose').addEventListener('click', closeLightbox
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') closeLightbox();
 });
+
+// --- Active nav highlight ---
+const pageSections = document.querySelectorAll('main section[id]');
+const allNavLinks = document.querySelectorAll('.nav-link');
+
+const sectionObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      allNavLinks.forEach(link => link.classList.remove('active'));
+      const active = document.querySelector(`.nav-link[href="#${entry.target.id}"]`);
+      if (active) active.classList.add('active');
+    }
+  });
+}, { threshold: 0.4 });
+
+pageSections.forEach(section => sectionObserver.observe(section));

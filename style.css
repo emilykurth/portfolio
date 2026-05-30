@@ -317,7 +317,6 @@ section[id] {
 .edu-box:hover,
 .edu-box:focus-within {
   box-shadow: 0 6px 24px rgba(61, 145, 152, 0.4);
-  outline: none;
 }
 
 .edu-box:focus {

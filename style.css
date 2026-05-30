@@ -71,16 +71,6 @@ button { cursor: pointer; }
   height: var(--wave-height);
 }
 
-@keyframes waveScroll {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
-}
-
-.hero .section-wave svg {
-  width: 200%;
-  animation: waveScroll 10s linear infinite;
-  animation-play-state: paused;
-}
 
 /* === Navigation === */
 .nav {

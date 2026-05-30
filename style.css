@@ -1,17 +1,17 @@
 /* === Fonts === */
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Krona+One&family=Kufam:ital,wght@0,400;0,500;0,700;1,400&display=swap');
 
 /* === Custom Properties === */
 :root {
-  --color-bg: #F8F5F0;
-  --color-primary: #1B4F72;
-  --color-accent: #48C9B0;
+  --color-bg: #FFFFFF;
+  --color-bg-alt: #F2F4F4;
+  --color-primary: #143032;
+  --color-accent: #3D9198;
   --color-text: #2C3E50;
-  --color-section-alt: #EAF4F4;
-  --color-contact-bg: #1B4F72;
-  --color-footer-bg: #0d2233;
-  --font-heading: 'Playfair Display', serif;
-  --font-body: 'Inter', sans-serif;
+  --color-contact-bg: #143032;
+  --color-footer-bg: #0a1b1c;
+  --font-heading: 'Krona One', sans-serif;
+  --font-body: 'Kufam', sans-serif;
   --nav-height: 64px;
   --max-width: 1200px;
   --wave-height: 60px;

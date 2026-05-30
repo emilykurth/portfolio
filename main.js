@@ -39,6 +39,30 @@ const sectionObserver = new IntersectionObserver((entries) => {
 
 pageSections.forEach(section => sectionObserver.observe(section));
 
+// ── Hero wave scroll trigger ─────────────────────────────────────────
+(function () {
+  const waveSvg = document.querySelector('.hero .section-wave svg');
+  const waveDiv = document.querySelector('.hero .section-wave');
+  const hero    = document.getElementById('hero');
+  if (!waveSvg || !hero) return;
+
+  window.addEventListener('scroll', () => {
+    const progress = Math.min(window.scrollY / (hero.offsetHeight * 0.8), 1);
+
+    if (progress > 0) {
+      // Speed up from 10s → 1.5s as user scrolls through the hero
+      const duration = Math.max(1.5, 10 - progress * 8.5);
+      waveSvg.style.animationPlayState = 'running';
+      waveSvg.style.animationDuration  = `${duration}s`;
+      // Drift the wave down slightly, as if washing away
+      waveDiv.style.transform = `translateY(${progress * 18}px)`;
+    } else {
+      waveSvg.style.animationPlayState = 'paused';
+      waveDiv.style.transform = '';
+    }
+  }, { passive: true });
+})();
+
 // ── Coverflow Carousel ──────────────────────────────────────────────
 function initCarousel(wrapper) {
   const track = wrapper.querySelector('.carousel-track');

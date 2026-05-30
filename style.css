@@ -253,7 +253,7 @@ section[id] {
   border-radius: 4px;
   width: 100%;
   object-fit: cover;
-  box-shadow: 0 12px 40px rgba(27, 79, 114, 0.15);
+  box-shadow: 0 12px 40px rgba(20, 48, 50, 0.15);
 }
 .about-bio {
   color: var(--color-text);
@@ -298,13 +298,13 @@ section[id] {
   background: #fff;
   border-radius: 6px;
   padding: 2rem;
-  box-shadow: 0 2px 16px rgba(27, 79, 114, 0.07);
+  box-shadow: 0 2px 16px rgba(20, 48, 50, 0.07);
   border-top: 3px solid var(--color-accent);
   transition: transform 0.2s, box-shadow 0.2s;
 }
 .edu-card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 8px 28px rgba(27, 79, 114, 0.12);
+  box-shadow: 0 8px 28px rgba(20, 48, 50, 0.12);
 }
 .edu-year {
   font-size: 0.8rem;

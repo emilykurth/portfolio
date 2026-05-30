@@ -115,127 +115,126 @@
         </svg>
       </div>
     </section>
-    <section class="portfolio" id="portfolio">
-      <div class="container">
-        <p class="section-label">My Work</p>
-        <h2 class="section-title">Portfolio</h2>
-        <p class="section-subtitle">A selection of recent projects</p>
+    <div id="portfolio">
 
-        <div class="portfolio-filters">
-          <button class="filter-btn active" data-filter="all">All</button>
-          <button class="filter-btn" data-filter="illustration">Illustration</button>
-          <button class="filter-btn" data-filter="graphic-design">Graphic Design</button>
-          <button class="filter-btn" data-filter="branding">Branding</button>
+      <!-- Social Media -->
+      <section class="portfolio-section" id="social-media">
+        <div class="container">
+          <p class="section-label">Portfolio</p>
+          <h2 class="section-title">Social Media</h2>
         </div>
-
-        <div class="portfolio-grid">
-          <!-- REPLACE: Swap src, data-title, data-description for real work -->
-          <div class="portfolio-card" tabindex="0" role="button" data-category="illustration"
-               data-title="Ocean Depths"
-               data-description="A digital illustration exploring the luminous world beneath the ocean surface."
-               onclick="openLightbox(this)">
-            <img src="https://placehold.co/600x450/48C9B0/1B4F72?text=Illustration+1" alt="Ocean Depths">
-            <div class="card-overlay">
-              <span class="card-tag">Illustration</span>
-              <h3 class="card-title">Ocean Depths</h3>
-            </div>
+        <div class="carousel-wrapper">
+          <button class="carousel-btn carousel-btn--prev" aria-label="Previous">&#8249;</button>
+          <div class="carousel-track">
+            <div class="carousel-item"><img src="https://placehold.co/400x400/3D9198/fff?text=Social+1" alt="Social Media 1"></div>
+            <div class="carousel-item"><img src="https://placehold.co/400x400/3D9198/fff?text=Social+2" alt="Social Media 2"></div>
+            <div class="carousel-item"><img src="https://placehold.co/400x400/3D9198/fff?text=Social+3" alt="Social Media 3"></div>
+            <div class="carousel-item"><img src="https://placehold.co/400x400/3D9198/fff?text=Social+4" alt="Social Media 4"></div>
+            <div class="carousel-item"><img src="https://placehold.co/400x400/3D9198/fff?text=Social+5" alt="Social Media 5"></div>
+            <div class="carousel-item"><img src="https://placehold.co/400x400/3D9198/fff?text=Social+6" alt="Social Media 6"></div>
           </div>
+          <button class="carousel-btn carousel-btn--next" aria-label="Next">&#8250;</button>
+        </div>
+        <div class="section-wave">
+          <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0,40 C360,0 1080,60 1440,20 L1440,60 L0,60 Z" fill="#F2F4F4"/>
+          </svg>
+        </div>
+      </section>
 
-          <div class="portfolio-card" tabindex="0" role="button" data-category="illustration"
-               data-title="Tide Pool"
-               data-description="Gouache-style illustration of a Pacific coast tide pool with anemones and starfish."
-               onclick="openLightbox(this)">
-            <img src="https://placehold.co/600x450/5dade2/1B4F72?text=Illustration+2" alt="Tide Pool">
-            <div class="card-overlay">
-              <span class="card-tag">Illustration</span>
-              <h3 class="card-title">Tide Pool</h3>
-            </div>
+      <!-- Graphic Design -->
+      <section class="portfolio-section" id="graphic-design">
+        <div class="container">
+          <p class="section-label">Portfolio</p>
+          <h2 class="section-title">Graphic Design</h2>
+        </div>
+        <div class="carousel-wrapper">
+          <button class="carousel-btn carousel-btn--prev" aria-label="Previous">&#8249;</button>
+          <div class="carousel-track">
+            <div class="carousel-item"><img src="https://placehold.co/400x400/143032/fff?text=Design+1" alt="Graphic Design 1"></div>
+            <div class="carousel-item"><img src="https://placehold.co/400x400/143032/fff?text=Design+2" alt="Graphic Design 2"></div>
+            <div class="carousel-item"><img src="https://placehold.co/400x400/143032/fff?text=Design+3" alt="Graphic Design 3"></div>
+            <div class="carousel-item"><img src="https://placehold.co/400x400/143032/fff?text=Design+4" alt="Graphic Design 4"></div>
+            <div class="carousel-item"><img src="https://placehold.co/400x400/143032/fff?text=Design+5" alt="Graphic Design 5"></div>
+            <div class="carousel-item"><img src="https://placehold.co/400x400/143032/fff?text=Design+6" alt="Graphic Design 6"></div>
           </div>
+          <button class="carousel-btn carousel-btn--next" aria-label="Next">&#8250;</button>
+        </div>
+        <div class="section-wave">
+          <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z" fill="#FFFFFF"/>
+          </svg>
+        </div>
+      </section>
 
-          <div class="portfolio-card" tabindex="0" role="button" data-category="illustration"
-               data-title="Storm at Sea"
-               data-description="Editorial illustration depicting a dramatic sea storm in muted ink and wash tones."
-               onclick="openLightbox(this)">
-            <img src="https://placehold.co/600x450/1B4F72/48C9B0?text=Illustration+3" alt="Storm at Sea">
-            <div class="card-overlay">
-              <span class="card-tag">Illustration</span>
-              <h3 class="card-title">Storm at Sea</h3>
-            </div>
-          </div>
+      <!-- Brand Work -->
+      <section class="portfolio-section brand-work-section" id="brand-work">
+        <div class="container">
+          <p class="section-label">Portfolio</p>
+          <h2 class="section-title">Brand Work</h2>
+          <div class="brand-grid">
 
-          <div class="portfolio-card" tabindex="0" role="button" data-category="graphic-design"
-               data-title="Wave Brand System"
-               data-description="Typography-driven brand system built around fluid wave forms for a coastal lifestyle brand."
-               onclick="openLightbox(this)">
-            <img src="https://placehold.co/600x450/48C9B0/0d2233?text=Graphic+Design+1" alt="Wave Brand System">
-            <div class="card-overlay">
-              <span class="card-tag">Graphic Design</span>
-              <h3 class="card-title">Wave Brand System</h3>
+            <div class="brand-panel">
+              <div class="brand-panel__thumb">
+                <img src="https://placehold.co/400x400/3D9198/fff?text=Brand+1" alt="Brand Project 1">
+              </div>
+              <div class="brand-panel__detail">
+                <div class="brand-panel__images">
+                  <img src="https://placehold.co/600x420/143032/fff?text=Detail+1a" alt="">
+                  <img src="https://placehold.co/600x420/143032/fff?text=Detail+1b" alt="">
+                </div>
+                <div class="brand-panel__text">
+                  <!-- REPLACE: project title and description -->
+                  <h3>Project Title</h3>
+                  <p>Project description placeholder.</p>
+                </div>
+              </div>
             </div>
-          </div>
 
-          <div class="portfolio-card" tabindex="0" role="button" data-category="graphic-design"
-               data-title="Coastal Magazine Layout"
-               data-description="Editorial layout design for a travel magazine feature on coastal communities."
-               onclick="openLightbox(this)">
-            <img src="https://placehold.co/600x450/5dade2/0d2233?text=Graphic+Design+2" alt="Coastal Magazine Layout">
-            <div class="card-overlay">
-              <span class="card-tag">Graphic Design</span>
-              <h3 class="card-title">Coastal Magazine Layout</h3>
+            <div class="brand-panel">
+              <div class="brand-panel__thumb">
+                <img src="https://placehold.co/400x400/3D9198/fff?text=Brand+2" alt="Brand Project 2">
+              </div>
+              <div class="brand-panel__detail">
+                <div class="brand-panel__images">
+                  <img src="https://placehold.co/600x420/143032/fff?text=Detail+2a" alt="">
+                  <img src="https://placehold.co/600x420/143032/fff?text=Detail+2b" alt="">
+                </div>
+                <div class="brand-panel__text">
+                  <!-- REPLACE: project title and description -->
+                  <h3>Project Title</h3>
+                  <p>Project description placeholder.</p>
+                </div>
+              </div>
             </div>
-          </div>
 
-          <div class="portfolio-card" tabindex="0" role="button" data-category="graphic-design"
-               data-title="Sea Glass Poster"
-               data-description="Hand-lettered event poster with sea glass color palette for an ocean conservation fundraiser."
-               onclick="openLightbox(this)">
-            <img src="https://placehold.co/600x450/1B4F72/EAF4F4?text=Graphic+Design+3" alt="Sea Glass Poster">
-            <div class="card-overlay">
-              <span class="card-tag">Graphic Design</span>
-              <h3 class="card-title">Sea Glass Poster</h3>
+            <div class="brand-panel">
+              <div class="brand-panel__thumb">
+                <img src="https://placehold.co/400x400/3D9198/fff?text=Brand+3" alt="Brand Project 3">
+              </div>
+              <div class="brand-panel__detail">
+                <div class="brand-panel__images">
+                  <img src="https://placehold.co/600x420/143032/fff?text=Detail+3a" alt="">
+                  <img src="https://placehold.co/600x420/143032/fff?text=Detail+3b" alt="">
+                </div>
+                <div class="brand-panel__text">
+                  <!-- REPLACE: project title and description -->
+                  <h3>Project Title</h3>
+                  <p>Project description placeholder.</p>
+                </div>
+              </div>
             </div>
-          </div>
 
-          <div class="portfolio-card" tabindex="0" role="button" data-category="branding"
-               data-title="Harbor Coffee Co."
-               data-description="Full brand identity for an independent coffee roaster with a maritime heritage theme."
-               onclick="openLightbox(this)">
-            <img src="https://placehold.co/600x450/48C9B0/1B4F72?text=Branding+1" alt="Harbor Coffee Co.">
-            <div class="card-overlay">
-              <span class="card-tag">Branding</span>
-              <h3 class="card-title">Harbor Coffee Co.</h3>
-            </div>
-          </div>
-
-          <div class="portfolio-card" tabindex="0" role="button" data-category="branding"
-               data-title="Blue Pearl Spa"
-               data-description="Luxury spa brand identity including logo, color system, and packaging design."
-               onclick="openLightbox(this)">
-            <img src="https://placehold.co/600x450/5dade2/1B4F72?text=Branding+2" alt="Blue Pearl Spa">
-            <div class="card-overlay">
-              <span class="card-tag">Branding</span>
-              <h3 class="card-title">Blue Pearl Spa</h3>
-            </div>
-          </div>
-
-          <div class="portfolio-card" tabindex="0" role="button" data-category="branding"
-               data-title="Maritime Goods"
-               data-description="Rugged coastal lifestyle brand identity for an outdoor and marine goods retailer."
-               onclick="openLightbox(this)">
-            <img src="https://placehold.co/600x450/1B4F72/48C9B0?text=Branding+3" alt="Maritime Goods">
-            <div class="card-overlay">
-              <span class="card-tag">Branding</span>
-              <h3 class="card-title">Maritime Goods</h3>
-            </div>
           </div>
         </div>
-      </div>
-      <div class="section-wave">
-        <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M0,40 C360,0 1080,60 1440,20 L1440,60 L0,60 Z" fill="#1B4F72"/>
-        </svg>
-      </div>
-    </section>
+        <div class="section-wave">
+          <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0,40 C360,0 1080,60 1440,20 L1440,60 L0,60 Z" fill="#143032"/>
+          </svg>
+        </div>
+      </section>
+
+    </div>
     <section class="contact" id="contact">
       <div class="container">
         <p class="section-label">Say Hello</p>
@@ -271,18 +270,6 @@
       <p class="footer-copy">&copy; 2026 Emily Kurth. All rights reserved.</p>
     </div>
   </footer>
-  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Project details">
-    <div class="lightbox-inner">
-      <button class="lightbox-close" id="lightboxClose" aria-label="Close lightbox">&times;</button>
-      <img src="" alt="" id="lightboxImg" class="lightbox-img">
-      <div class="lightbox-info">
-        <span class="card-tag" id="lightboxTag"></span>
-        <h3 class="lightbox-title" id="lightboxTitle"></h3>
-        <p class="lightbox-desc" id="lightboxDesc"></p>
-      </div>
-    </div>
-  </div>
-
   <script src="main.js"></script>
 </body>
 </html>

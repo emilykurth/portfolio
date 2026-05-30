@@ -42,6 +42,7 @@ pageSections.forEach(section => sectionObserver.observe(section));
 // ── Coverflow Carousel ──────────────────────────────────────────────
 function initCarousel(wrapper) {
   const track = wrapper.querySelector('.carousel-track');
+  if (!track) return;
   const items = Array.from(track.querySelectorAll('.carousel-item'));
   const count = items.length;
   if (count === 0) return;
@@ -65,12 +66,15 @@ function initCarousel(wrapper) {
     });
   }
 
-  wrapper.querySelector('.carousel-btn--prev').addEventListener('click', () => {
+  const prevBtn = wrapper.querySelector('.carousel-btn--prev');
+  const nextBtn = wrapper.querySelector('.carousel-btn--next');
+
+  if (prevBtn) prevBtn.addEventListener('click', () => {
     current = (current - 1 + count) % count;
     positionItems();
   });
 
-  wrapper.querySelector('.carousel-btn--next').addEventListener('click', () => {
+  if (nextBtn) nextBtn.addEventListener('click', () => {
     current = (current + 1) % count;
     positionItems();
   });

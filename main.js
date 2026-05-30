@@ -38,3 +38,45 @@ const sectionObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.4 });
 
 pageSections.forEach(section => sectionObserver.observe(section));
+
+// ── Coverflow Carousel ──────────────────────────────────────────────
+function initCarousel(wrapper) {
+  const track = wrapper.querySelector('.carousel-track');
+  const items = Array.from(track.querySelectorAll('.carousel-item'));
+  const count = items.length;
+  if (count === 0) return;
+  let current = 0;
+
+  function positionItems() {
+    const gap = Math.min(300, wrapper.offsetWidth * 0.22);
+    items.forEach((item, i) => {
+      let offset = i - current;
+      if (offset > count / 2)  offset -= count;
+      if (offset < -count / 2) offset += count;
+
+      const abs     = Math.abs(offset);
+      const scale   = Math.max(0.5, 1 - abs * 0.15);
+      const opacity = abs > 3 ? 0 : Math.max(0.2, 1 - abs * 0.27);
+      const tx      = offset * gap;
+
+      item.style.transform = `translate(calc(-50% + ${tx}px), -50%) scale(${scale})`;
+      item.style.opacity   = opacity;
+      item.style.zIndex    = 10 - abs;
+    });
+  }
+
+  wrapper.querySelector('.carousel-btn--prev').addEventListener('click', () => {
+    current = (current - 1 + count) % count;
+    positionItems();
+  });
+
+  wrapper.querySelector('.carousel-btn--next').addEventListener('click', () => {
+    current = (current + 1) % count;
+    positionItems();
+  });
+
+  positionItems();
+  window.addEventListener('resize', positionItems);
+}
+
+document.querySelectorAll('.carousel-wrapper').forEach(initCarousel);

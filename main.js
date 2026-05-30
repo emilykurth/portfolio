@@ -39,7 +39,7 @@ const sectionObserver = new IntersectionObserver((entries) => {
 
 pageSections.forEach(section => sectionObserver.observe(section));
 
-// ── Coverflow Carousel ──────────────────────────────────────────────
+// ── Carousel (coverflow + 4-per-view grid) ──────────────────────────
 function initCarousel(wrapper) {
   const track = wrapper.querySelector('.carousel-track');
   if (!track) return;
@@ -48,6 +48,51 @@ function initCarousel(wrapper) {
   if (count === 0) return;
   let current = 0;
 
+  const perView = parseInt(wrapper.dataset.perView) || 0;
+
+  function addControls(prev, next) {
+    const prevBtn = wrapper.querySelector('.carousel-btn--prev');
+    const nextBtn = wrapper.querySelector('.carousel-btn--next');
+    if (prevBtn) prevBtn.addEventListener('click', prev);
+    if (nextBtn) nextBtn.addEventListener('click', next);
+
+    wrapper.setAttribute('tabindex', '0');
+    wrapper.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft')  { e.preventDefault(); prev(); }
+      if (e.key === 'ArrowRight') { e.preventDefault(); next(); }
+    });
+
+    let wheelCooldown = false;
+    wrapper.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      if (wheelCooldown) return;
+      wheelCooldown = true;
+      setTimeout(() => { wheelCooldown = false; }, 400);
+      (e.deltaX > 0 || e.deltaY > 0) ? next() : prev();
+    }, { passive: false });
+  }
+
+  if (perView > 0) {
+    // ── Grid / sliding-track mode ──
+    function slideWidth() { return items[0] ? items[0].offsetWidth + 16 : 0; }
+    function positionTrack() {
+      track.style.transform = `translateX(-${current * slideWidth()}px)`;
+    }
+    function prev() {
+      current = current > 0 ? current - 1 : count - perView;
+      positionTrack();
+    }
+    function next() {
+      current = current < count - perView ? current + 1 : 0;
+      positionTrack();
+    }
+    addControls(prev, next);
+    positionTrack();
+    window.addEventListener('resize', positionTrack);
+    return;
+  }
+
+  // ── Coverflow mode ──
   function positionItems() {
     const gap = Math.min(300, wrapper.offsetWidth * 0.22);
     items.forEach((item, i) => {
@@ -68,29 +113,7 @@ function initCarousel(wrapper) {
 
   function prev() { current = (current - 1 + count) % count; positionItems(); }
   function next() { current = (current + 1) % count; positionItems(); }
-
-  const prevBtn = wrapper.querySelector('.carousel-btn--prev');
-  const nextBtn = wrapper.querySelector('.carousel-btn--next');
-  if (prevBtn) prevBtn.addEventListener('click', prev);
-  if (nextBtn) nextBtn.addEventListener('click', next);
-
-  // Keyboard: arrow keys when wrapper is focused
-  wrapper.setAttribute('tabindex', '0');
-  wrapper.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowLeft')  { e.preventDefault(); prev(); }
-    if (e.key === 'ArrowRight') { e.preventDefault(); next(); }
-  });
-
-  // Mouse wheel / trackpad swipe
-  let wheelCooldown = false;
-  wrapper.addEventListener('wheel', (e) => {
-    e.preventDefault();
-    if (wheelCooldown) return;
-    wheelCooldown = true;
-    setTimeout(() => { wheelCooldown = false; }, 400);
-    if (e.deltaX > 0 || e.deltaY > 0) { next(); } else { prev(); }
-  }, { passive: false });
-
+  addControls(prev, next);
   positionItems();
   window.addEventListener('resize', positionItems);
 }

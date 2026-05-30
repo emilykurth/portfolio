@@ -436,6 +436,37 @@ section[id] {
 .carousel-btn--prev { left: 1.25rem; }
 .carousel-btn--next { right: 1.25rem; }
 
+/* Social Media — 4-per-view sliding track */
+#social-media .carousel-wrapper {
+  height: auto;
+  padding: 0 3.5rem;
+  box-sizing: border-box;
+}
+
+#social-media .carousel-track {
+  position: static;
+  display: flex;
+  gap: 1rem;
+  height: auto;
+  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+#social-media .carousel-item {
+  position: static;
+  flex: 0 0 calc(25% - 0.75rem);
+  width: auto;
+  height: 420px;
+  transform: none;
+  opacity: 1;
+  top: auto;
+  left: auto;
+}
+
+@media (max-width: 768px) {
+  #social-media .carousel-wrapper { padding: 0 2.5rem; }
+  #social-media .carousel-item { flex: 0 0 calc(50% - 0.5rem); height: 240px; }
+}
+
 @media (max-width: 768px) {
   .carousel-wrapper { height: 260px; }
   .carousel-item { width: 200px; height: 200px; }

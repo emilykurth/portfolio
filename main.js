@@ -79,12 +79,10 @@ function initCarousel(wrapper) {
       track.style.transform = `translateX(-${current * slideWidth()}px)`;
     }
     function prev() {
-      current = current > 0 ? current - 1 : count - perView;
-      positionTrack();
+      if (current > 0) { current--; positionTrack(); }
     }
     function next() {
-      current = current < count - perView ? current + 1 : 0;
-      positionTrack();
+      if (current < count - perView) { current++; positionTrack(); }
     }
     addControls(prev, next);
     positionTrack();

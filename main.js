@@ -84,3 +84,50 @@ function initCarousel(wrapper) {
 }
 
 document.querySelectorAll('.carousel-wrapper').forEach(initCarousel);
+
+// ── Brand Work Expandable Panels ────────────────────────────────────
+function initBrandPanels() {
+  const grid   = document.querySelector('.brand-grid');
+  if (!grid) return;
+  const panels = Array.from(grid.querySelectorAll('.brand-panel'));
+
+  function activatePanel(panel) {
+    panels.forEach(p => p.classList.remove('expanded', 'hidden'));
+    grid.classList.remove('has-expanded');
+
+    panel.classList.add('expanded');
+    grid.classList.add('has-expanded');
+    panels.forEach(p => {
+      if (p !== panel) p.classList.add('hidden');
+    });
+    panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  function collapseAll() {
+    panels.forEach(p => p.classList.remove('expanded', 'hidden'));
+    grid.classList.remove('has-expanded');
+  }
+
+  panels.forEach(panel => {
+    panel.addEventListener('click', () => {
+      if (panel.classList.contains('expanded')) {
+        collapseAll();
+      } else {
+        activatePanel(panel);
+      }
+    });
+
+    panel.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        if (panel.classList.contains('expanded')) {
+          collapseAll();
+        } else {
+          activatePanel(panel);
+        }
+      }
+    });
+  });
+}
+
+initBrandPanels();

@@ -274,7 +274,7 @@ section[id] {
 /* === Education === */
 .education {
   position: relative;
-  background: var(--color-section-alt);
+  background: var(--color-bg-alt);
   padding: 6rem 0 calc(var(--wave-height) + 4rem);
 }
 .education-grid {

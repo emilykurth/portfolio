@@ -189,7 +189,7 @@ section[id] {
   align-items: center;
   justify-content: center;
   text-align: center;
-  background: linear-gradient(135deg, #0d3349, #1B4F72, #2980b9, #48C9B0, #1B4F72, #0d3349);
+  background: linear-gradient(135deg, #0a1b1c, #143032, #1e5459, #3D9198, #143032, #0a1b1c);
   background-size: 400% 400%;
   animation: oceanTide 14s ease infinite;
   padding: var(--nav-height) 2rem calc(var(--wave-height) + 3rem);

@@ -16,6 +16,7 @@
   --max-width: 1200px;
   --wave-height: 60px;
   --color-btn-overlay: rgba(20, 48, 50, 0.72);
+  --color-accent-alpha: rgba(61, 145, 152, 0.3);
 }
 
 /* === Reset === */
@@ -472,7 +473,7 @@ section[id] {
 }
 
 .brand-panel:not(.hidden):not(.expanded) .brand-panel__thumb:hover {
-  box-shadow: 0 8px 28px rgba(61, 145, 152, 0.3);
+  box-shadow: 0 8px 28px var(--color-accent-alpha);
 }
 
 .brand-panel__detail {

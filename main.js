@@ -56,8 +56,8 @@ function initCarousel(wrapper) {
       if (offset < -count / 2) offset += count;
 
       const abs     = Math.abs(offset);
-      const scale   = Math.max(0.5, 1 - abs * 0.15);
-      const opacity = abs > 3 ? 0 : Math.max(0.2, 1 - abs * 0.27);
+      const scale   = abs === 0 ? 1 : 0.85;
+      const opacity = abs === 0 ? 1 : (abs === 1 ? 0.65 : 0);
       const tx      = offset * gap;
 
       item.style.transform = `translate(calc(-50% + ${tx}px), -50%) scale(${scale})`;
@@ -66,18 +66,30 @@ function initCarousel(wrapper) {
     });
   }
 
+  function prev() { current = (current - 1 + count) % count; positionItems(); }
+  function next() { current = (current + 1) % count; positionItems(); }
+
   const prevBtn = wrapper.querySelector('.carousel-btn--prev');
   const nextBtn = wrapper.querySelector('.carousel-btn--next');
+  if (prevBtn) prevBtn.addEventListener('click', prev);
+  if (nextBtn) nextBtn.addEventListener('click', next);
 
-  if (prevBtn) prevBtn.addEventListener('click', () => {
-    current = (current - 1 + count) % count;
-    positionItems();
+  // Keyboard: arrow keys when wrapper is focused
+  wrapper.setAttribute('tabindex', '0');
+  wrapper.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft')  { e.preventDefault(); prev(); }
+    if (e.key === 'ArrowRight') { e.preventDefault(); next(); }
   });
 
-  if (nextBtn) nextBtn.addEventListener('click', () => {
-    current = (current + 1) % count;
-    positionItems();
-  });
+  // Mouse wheel / trackpad swipe
+  let wheelCooldown = false;
+  wrapper.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    if (wheelCooldown) return;
+    wheelCooldown = true;
+    setTimeout(() => { wheelCooldown = false; }, 400);
+    if (e.deltaX > 0 || e.deltaY > 0) { next(); } else { prev(); }
+  }, { passive: false });
 
   positionItems();
   window.addEventListener('resize', positionItems);

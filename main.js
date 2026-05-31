@@ -227,44 +227,123 @@ document.querySelectorAll('.carousel-wrapper').forEach(initCarousel);
 
 // ── Brand Work Expandable Panels ────────────────────────────────────
 function initBrandPanels() {
-  const grid   = document.querySelector('.brand-grid');
+  const grid = document.querySelector('.brand-grid');
   if (!grid) return;
   const panels = Array.from(grid.querySelectorAll('.brand-panel'));
+  const DUR = '0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+
+  // FLIP the entire panel from its old screen position to its new one,
+  // while also animating its width. Each panel's starting position in the
+  // grid (top-left, top-right, bottom-left, bottom-right) determines the
+  // direction of the slide automatically.
+  function flipPanel(panel, applyChanges) {
+    const r0 = panel.getBoundingClientRect();
+    const w0 = panel.offsetWidth;
+
+    applyChanges();
+
+    const r1 = panel.getBoundingClientRect();
+    const dx = r0.left - r1.left;
+    const dy = r0.top  - r1.top;
+
+    panel.style.transition = 'none';
+    panel.style.transform  = `translate(${dx}px, ${dy}px)`;
+    panel.style.maxWidth   = w0 + 'px';
+    panel.getBoundingClientRect(); // force reflow
+
+    panel.style.transition = `transform ${DUR}, max-width ${DUR}`;
+    panel.style.transform  = '';
+    panel.style.maxWidth   = '100%';
+
+    const onEnd = (e) => {
+      if (e.propertyName !== 'transform') return;
+      panel.removeEventListener('transitionend', onEnd);
+      panel.style.transform  = '';
+      panel.style.transition = '';
+      panel.style.maxWidth   = '';
+    };
+    panel.addEventListener('transitionend', onEnd);
+  }
 
   function activatePanel(panel) {
-    panels.forEach(p => p.classList.remove('expanded', 'hidden'));
-    grid.classList.remove('has-expanded');
-
-    panel.classList.add('expanded');
-    grid.classList.add('has-expanded');
-    panels.forEach(p => {
-      if (p !== panel) p.classList.add('hidden');
+    flipPanel(panel, () => {
+      panels.forEach(p => p.classList.remove('expanded', 'hidden'));
+      grid.classList.remove('has-expanded');
+      panel.classList.add('expanded');
+      grid.classList.add('has-expanded');
+      panels.forEach(p => { if (p !== panel) p.classList.add('hidden'); });
     });
     panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 
   function collapseAll() {
-    panels.forEach(p => p.classList.remove('expanded', 'hidden'));
+    const expanded = panels.find(p => p.classList.contains('expanded'));
+    if (!expanded) {
+      panels.forEach(p => p.classList.remove('expanded', 'hidden'));
+      grid.classList.remove('has-expanded');
+      return;
+    }
+
+    const r0     = expanded.getBoundingClientRect();
+    const w0     = expanded.offsetWidth;
+    const others = panels.filter(p => p !== expanded);
+
+    // Pre-set other panels to invisible before un-hiding them so they don't pop
+    others.forEach(p => { p.style.transition = 'none'; p.style.opacity = '0'; });
+
+    // Apply all class changes so the grid reflows to its final state
+    expanded.classList.remove('expanded');
+    panels.forEach(p => p.classList.remove('hidden'));
     grid.classList.remove('has-expanded');
+
+    // Measure where the expanded panel ended up in the restored grid
+    const r1 = expanded.getBoundingClientRect();
+    const dx  = r0.left - r1.left;
+    const dy  = r0.top  - r1.top;
+
+    // FLIP: push the expanded panel back to its old (full-width) position
+    expanded.style.zIndex     = '10';
+    expanded.style.transition = 'none';
+    expanded.style.transform  = `translate(${dx}px, ${dy}px)`;
+    expanded.style.maxWidth   = w0 + 'px';
+
+    expanded.getBoundingClientRect(); // single reflow commits all pending states
+
+    // Play: animate the expanded panel home and fade the others in simultaneously
+    expanded.style.transition = `transform ${DUR}, max-width ${DUR}`;
+    expanded.style.transform  = '';
+    expanded.style.maxWidth   = '100%';
+
+    others.forEach(p => {
+      p.style.transition = `opacity ${DUR}`;
+      p.style.opacity    = '1';
+    });
+
+    const onEnd = (e) => {
+      if (e.target !== expanded || e.propertyName !== 'transform') return;
+      expanded.removeEventListener('transitionend', onEnd);
+      expanded.style.transform  = '';
+      expanded.style.transition = '';
+      expanded.style.maxWidth   = '';
+      expanded.style.zIndex     = '';
+      others.forEach(p => { p.style.opacity = ''; p.style.transition = ''; });
+    };
+    expanded.addEventListener('transitionend', onEnd);
   }
 
   panels.forEach(panel => {
-    panel.addEventListener('click', () => {
-      if (panel.classList.contains('expanded')) {
+    panel.addEventListener('click', (e) => {
+      if (e.target.closest('.brand-back-btn')) {
+        e.stopPropagation();
         collapseAll();
-      } else {
-        activatePanel(panel);
+        return;
       }
+      if (!panel.classList.contains('expanded')) activatePanel(panel);
     });
-
     panel.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        if (panel.classList.contains('expanded')) {
-          collapseAll();
-        } else {
-          activatePanel(panel);
-        }
+        if (!panel.classList.contains('expanded')) activatePanel(panel);
       }
     });
   });

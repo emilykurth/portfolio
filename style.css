@@ -389,7 +389,8 @@ section[id] {
 }
 
 .edu-box:hover .edu-box__dropdown,
-.edu-box:focus-within .edu-box__dropdown {
+.edu-box:focus-within .edu-box__dropdown,
+.edu-box.open .edu-box__dropdown {
   /* No delay when opening — expands immediately on hover */
   transition: max-height 1s ease-in-out, padding-top 1s ease-in-out,
               padding-bottom 1s ease-in-out, margin-top 1s ease-in-out;
@@ -581,6 +582,7 @@ section[id] {
   #graphic-design .carousel-wrapper { padding: 0 3.5rem; }
   #social-media .carousel-item,
   #graphic-design .carousel-item { height: 240px; }
+  #graphic-design .carousel-item img { height: 100%; width: auto; }
 }
 
 @media (max-width: 768px) {
@@ -876,9 +878,23 @@ section[id] {
 
 @media (max-width: 768px) {
   .brand-grid { grid-template-columns: 1fr; gap: 1rem; }
-  .brand-panel.expanded .brand-panel__detail { grid-template-columns: 1fr; }
   .brand-panel { flex-direction: column; text-align: center; }
+  .brand-panel.expanded { text-align: left; }
   .brand-panel__thumb { width: 100px; height: 100px; }
+  .brand-panel.expanded .brand-panel__detail { max-height: 1500px; }
+  /* Roguewave and C2M desktop side-by-side → stack on mobile */
+  .brand-panel--roguewave.expanded .brand-panel__text,
+  .brand-panel--c2m.expanded .brand-panel__text { flex: none; width: 100%; }
+  .brand-panel--roguewave.expanded .brand-panel__detail,
+  .brand-panel--c2m.expanded .brand-panel__detail {
+    flex: none;
+    width: 100%;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 2px solid var(--color-accent);
+  }
+  /* SLO Thrift logo comparison: stack vertically */
+  .brand-comparison { grid-template-columns: 1fr; }
 }
 
 /* === Contact === */

@@ -347,6 +347,17 @@ function initBrandPanels() {
 
 initBrandPanels();
 
+// ── Education box tap-to-expand (touch devices) ──────────────────────
+if (window.matchMedia('(pointer: coarse)').matches) {
+  document.querySelectorAll('.edu-box').forEach(box => {
+    box.addEventListener('click', () => {
+      const wasOpen = box.classList.contains('open');
+      document.querySelectorAll('.edu-box').forEach(b => b.classList.remove('open'));
+      if (!wasOpen) box.classList.add('open');
+    });
+  });
+}
+
 // ── Color2Me PDF slide viewer ────────────────────────────────────────
 (function () {
   const panel    = document.querySelector('.brand-panel--c2m');

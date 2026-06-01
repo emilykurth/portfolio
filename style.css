@@ -897,7 +897,17 @@ section[id] {
   .brand-panel { flex-direction: column; text-align: center; }
   .brand-panel.expanded { text-align: left; }
   .brand-panel__thumb { width: 100px; height: 100px; }
-  .brand-panel.expanded .brand-panel__detail { max-height: 1500px; }
+  .brand-panel.expanded .brand-panel__detail {
+    max-height: 1500px;
+    display: flex;
+    flex-direction: column;
+  }
+  /* Back button moves to top of detail on mobile so it's immediately visible */
+  .brand-panel.expanded .brand-panel__detail .brand-back-btn {
+    order: -1;
+    margin-top: 0;
+    margin-bottom: 1rem;
+  }
   /* Roguewave and C2M desktop side-by-side → stack on mobile */
   .brand-panel--roguewave.expanded .brand-panel__text,
   .brand-panel--c2m.expanded .brand-panel__text { flex: none; width: 100%; }

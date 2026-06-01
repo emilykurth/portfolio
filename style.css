@@ -767,6 +767,28 @@ section[id] {
   display: block;
 }
 
+/* MWR Aquatics: no divider line, images in a white card */
+.brand-panel--mwr.expanded .brand-panel__detail {
+  border-top: none;
+  padding-top: 0;
+}
+.brand-panel--mwr .brand-panel__images {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.25rem;
+}
+
+/* SLO Thrift: no divider line, comparison content in a white card */
+.brand-panel--slo-thrift.expanded .brand-panel__detail {
+  border-top: none;
+  padding-top: 0;
+}
+.brand-panel--slo-thrift .brand-comparison {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.25rem;
+}
+
 /* Roguewave thumb: show full logo, no circle crop */
 .brand-panel--roguewave .brand-panel__thumb {
   border-radius: 8px;

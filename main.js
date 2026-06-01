@@ -1,5 +1,6 @@
 'use strict';
 
+
 // --- Navigation: scroll frosting + hamburger ---
 const nav = document.getElementById('nav');
 const hamburger = document.getElementById('navHamburger');

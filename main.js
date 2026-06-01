@@ -29,7 +29,7 @@ const pageSections = document.querySelectorAll('main section[id]');
 const allNavLinks = document.querySelectorAll('.nav-link');
 
 // Portfolio sub-sections all map to the #portfolio nav link
-const portfolioIds = new Set(['social-media', 'graphic-design', 'brand-work']);
+const portfolioIds = new Set(['social-media', 'graphic-design', 'brand-work', 'projects']);
 
 const sectionObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
@@ -220,132 +220,135 @@ function initCarousel(wrapper) {
 
 document.querySelectorAll('.carousel-wrapper').forEach(initCarousel);
 
-// ── Brand Work Expandable Panels ────────────────────────────────────
+// ── Brand Work — panel replaces grid with fade+scale ────────────────
 function initBrandPanels() {
   const grid = document.querySelector('.brand-grid');
   if (!grid) return;
-  const panels = Array.from(grid.querySelectorAll('.brand-panel'));
-  const DUR = '0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+  const view = grid.parentElement; // .brand-view
 
-  // FLIP the entire panel from its old screen position to its new one,
-  // while also animating its width. Each panel's starting position in the
-  // grid (top-left, top-right, bottom-left, bottom-right) determines the
-  // direction of the slide automatically.
-  function flipPanel(panel, applyChanges) {
-    const r0 = panel.getBoundingClientRect();
-    const w0 = panel.offsetWidth;
+  const display     = document.getElementById('brand-display');
+  const displayBody = display.querySelector('.brand-display__body');
+  let activePanel   = null;
 
-    applyChanges();
+  function openDisplay(panel) {
+    panel._nextSibling = panel.nextElementSibling;
+    const gridH = grid.offsetHeight;
 
-    const r1 = panel.getBoundingClientRect();
-    const dx = r0.left - r1.left;
-    const dy = r0.top  - r1.top;
+    // Fade grid out first, force reflow so all 4 panels are visible at fade start
+    grid.classList.add('faded');
+    grid.getBoundingClientRect();
 
-    panel.style.transition = 'none';
-    panel.style.transform  = `translate(${dx}px, ${dy}px)`;
-    panel.style.maxWidth   = w0 + 'px';
-    panel.getBoundingClientRect(); // force reflow
+    // Now move panel to display and set expanded state
+    displayBody.appendChild(panel);
+    panel.classList.add('expanded');
 
-    panel.style.transition = `transform ${DUR}, max-width ${DUR}`;
-    panel.style.transform  = '';
-    panel.style.maxWidth   = '100%';
+    display.style.display = 'block';
+    const displayH = display.scrollHeight;
+    view.style.minHeight = Math.max(gridH, displayH) + 'px';
 
-    const onEnd = (e) => {
-      if (e.propertyName !== 'transform') return;
-      panel.removeEventListener('transitionend', onEnd);
-      panel.style.transform  = '';
-      panel.style.transition = '';
-      panel.style.maxWidth   = '';
-    };
-    panel.addEventListener('transitionend', onEnd);
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      display.classList.add('open');
+    }));
+    activePanel = panel;
   }
 
-  function activatePanel(panel) {
-    flipPanel(panel, () => {
-      panels.forEach(p => p.classList.remove('expanded', 'hidden'));
-      grid.classList.remove('has-expanded');
-      panel.classList.add('expanded');
-      grid.classList.add('has-expanded');
-      panels.forEach(p => { if (p !== panel) p.classList.add('hidden'); });
-    });
-    panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  function closeDisplay() {
+    if (!activePanel) return;
+    const panel = activePanel;
+    activePanel = null;
+
+    // Restore panel to grid while display is still fully visible
+    panel.classList.remove('expanded');
+    if (panel._nextSibling) grid.insertBefore(panel, panel._nextSibling);
+    else grid.appendChild(panel);
+    panel._nextSibling = null;
+
+    // Cross-fade: display fades out, grid fades in together
+    display.classList.remove('open');
+    grid.classList.remove('faded');
+
+    setTimeout(() => {
+      display.style.display = 'none';
+      view.style.minHeight = '';
+    }, 320);
   }
 
-  function collapseAll() {
-    const expanded = panels.find(p => p.classList.contains('expanded'));
-    if (!expanded) {
-      panels.forEach(p => p.classList.remove('expanded', 'hidden'));
-      grid.classList.remove('has-expanded');
-      return;
-    }
-
-    const r0     = expanded.getBoundingClientRect();
-    const w0     = expanded.offsetWidth;
-    const others = panels.filter(p => p !== expanded);
-
-    // Pre-set other panels to invisible before un-hiding them so they don't pop
-    others.forEach(p => { p.style.transition = 'none'; p.style.opacity = '0'; });
-
-    // Apply all class changes so the grid reflows to its final state
-    expanded.classList.remove('expanded');
-    panels.forEach(p => p.classList.remove('hidden'));
-    grid.classList.remove('has-expanded');
-
-    // Measure where the panel landed and its true column width after reflow
-    const r1          = expanded.getBoundingClientRect();
-    const targetWidth = expanded.offsetWidth; // actual 1fr column width in px
-    const dx          = r0.left - r1.left;
-    const dy          = r0.top  - r1.top;
-
-    // FLIP: push the expanded panel back to its old (full-width) position
-    expanded.style.zIndex     = '10';
-    expanded.style.transition = 'none';
-    expanded.style.transform  = `translate(${dx}px, ${dy}px)`;
-    expanded.style.maxWidth   = w0 + 'px';
-
-    expanded.getBoundingClientRect(); // single reflow commits all pending states
-
-    // Mirror the open: slide position AND shrink width together
-    expanded.style.transition = `transform ${DUR}, max-width ${DUR}`;
-    expanded.style.transform  = '';
-    expanded.style.maxWidth   = targetWidth + 'px';
-
-    others.forEach(p => {
-      p.style.transition = `opacity ${DUR}`;
-      p.style.opacity    = '1';
-    });
-
-    const onEnd = (e) => {
-      if (e.target !== expanded || e.propertyName !== 'transform') return;
-      expanded.removeEventListener('transitionend', onEnd);
-      expanded.style.transform  = '';
-      expanded.style.transition = '';
-      expanded.style.maxWidth   = '';
-      expanded.style.zIndex     = '';
-      others.forEach(p => { p.style.opacity = ''; p.style.transition = ''; });
-    };
-    expanded.addEventListener('transitionend', onEnd);
-  }
-
-  panels.forEach(panel => {
+  grid.querySelectorAll('.brand-panel').forEach(panel => {
     panel.addEventListener('click', (e) => {
-      if (e.target.closest('.brand-back-btn')) {
-        e.stopPropagation();
-        collapseAll();
-        return;
-      }
-      if (!panel.classList.contains('expanded')) activatePanel(panel);
+      if (e.target.closest('.brand-back-btn')) { e.stopPropagation(); closeDisplay(); return; }
+      if (panel.classList.contains('expanded')) { closeDisplay(); return; }
+      openDisplay(panel);
     });
-    panel.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        if (!panel.classList.contains('expanded')) activatePanel(panel);
-      }
+    panel.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openDisplay(panel); }
     });
   });
+
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDisplay(); });
 }
 
 initBrandPanels();
+
+// ── Class Projects — panel replaces grid with fade+scale ─────────────
+function initProjectCards() {
+  const grid = document.querySelector('.projects-grid');
+  if (!grid) return;
+  const view = grid.parentElement; // .project-view
+
+  const panel      = document.getElementById('project-panel');
+  const panelTitle = panel.querySelector('.project-panel__title');
+  const panelTag   = panel.querySelector('.project-panel__tag');
+  const panelBody  = panel.querySelector('.project-panel__body');
+  let activeCard   = null;
+
+  function openPanel(card) {
+    const detail = card.querySelector('.project-card__detail');
+    panelTitle.textContent = card.querySelector('.project-card__title').textContent;
+    panelTag.textContent   = card.querySelector('.project-card__tag').textContent;
+    panelBody.appendChild(detail);
+
+    grid.classList.add('faded');
+    panel.style.display = 'block';
+
+    // Measure panel height while still transparent, then size the wrapper
+    const panelH = panel.scrollHeight;
+    view.style.minHeight = Math.max(grid.offsetHeight, panelH) + 'px';
+
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      panel.classList.add('open');
+    }));
+    activeCard = card;
+  }
+
+  function closePanel() {
+    if (!activeCard) return;
+    const card = activeCard;
+    const detail = panelBody.querySelector('.project-card__detail');
+    activeCard = null;
+
+    // Cross-fade: panel fades out, grid fades in together
+    panel.classList.remove('open');
+    grid.classList.remove('faded');
+
+    setTimeout(() => {
+      if (detail) card.appendChild(detail);
+      panel.style.display = 'none';
+      view.style.minHeight = '';
+    }, 320);
+  }
+
+  grid.querySelectorAll('.project-card').forEach(card => {
+    card.addEventListener('click', () => openPanel(card));
+    card.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openPanel(card); }
+    });
+  });
+
+  panel.addEventListener('click', () => { if (activeCard) closePanel(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closePanel(); });
+}
+
+initProjectCards();
 
 // ── Education box tap-to-expand (touch devices) ──────────────────────
 if (window.matchMedia('(pointer: coarse)').matches) {
@@ -438,4 +441,165 @@ if (window.matchMedia('(pointer: coarse)').matches) {
 
   prevBtn.addEventListener('click', e => { e.stopPropagation(); slideTo(pageNum - 1, 'prev'); });
   nextBtn.addEventListener('click', e => { e.stopPropagation(); slideTo(pageNum + 1, 'next'); });
+})();
+
+// ── Campus Library Redesign image slideshow ──────────────────────────
+(function () {
+  const card = document.querySelector('.project-card--library');
+  if (!card) return;
+
+  const slides = [
+    'Portfolio Docs/OpS-Pro1.jpg',
+    'Portfolio Docs/OpS-pro2.jpg',
+    'Portfolio Docs/OpS-pro3.jpg',
+    'Portfolio Docs/OpS-pro4.jpg',
+    'Portfolio Docs/OpS-pro5.jpg'
+  ];
+
+  const track    = card.querySelector('.ops-slide-track');
+  const img      = card.querySelector('#ops-slide-img');
+  const prevBtn  = card.querySelector('.ops-prev');
+  const nextBtn  = card.querySelector('.ops-next');
+  const pageInfo = card.querySelector('.ops-page-info');
+  let current = 0, animating = false;
+  const SLIDE_DUR = 380;
+
+  function slideTo(n, dir) {
+    if (animating || n < 0 || n >= slides.length) return;
+    animating = true;
+
+    const ease = `${SLIDE_DUR}ms cubic-bezier(0.25, 0.46, 0.45, 0.94)`;
+    const inc  = document.createElement('img');
+
+    inc.onload = () => {
+      track.style.height = img.offsetHeight + 'px';
+      img.style.cssText  = 'position:absolute;top:0;left:0;width:100%;height:auto;';
+      inc.style.cssText  = `position:absolute;top:0;left:0;width:100%;height:auto;transform:translateX(${dir === 'next' ? '100%' : '-100%'});`;
+      track.appendChild(inc);
+
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        img.style.transition = `transform ${ease}`;
+        img.style.transform  = dir === 'next' ? 'translateX(-100%)' : 'translateX(100%)';
+        inc.style.transition = `transform ${ease}`;
+        inc.style.transform  = 'translateX(0)';
+
+        setTimeout(() => {
+          img.src = slides[n];
+          img.removeAttribute('style');
+          track.style.height = '';
+          inc.remove();
+          current = n;
+          pageInfo.textContent = `${n + 1} / ${slides.length}`;
+          animating = false;
+        }, SLIDE_DUR + 20);
+      }));
+    };
+
+    inc.src = slides[n];
+  }
+
+  prevBtn.addEventListener('click', e => { e.stopPropagation(); slideTo(current - 1, 'prev'); });
+  nextBtn.addEventListener('click', e => { e.stopPropagation(); slideTo(current + 1, 'next'); });
+})();
+
+// ── I Heart Jane PDF viewers (report + slides) ───────────────────────
+(function () {
+  const card = document.querySelector('.project-card--ihj');
+  if (!card || typeof pdfjsLib === 'undefined') return;
+
+  const SLIDE_DUR = 380;
+
+  function initPdfViewer(canvasId, pdfPath, prevBtn, nextBtn, infoEl) {
+    const canvas = document.getElementById(canvasId);
+    if (!canvas) return;
+    const ctx   = canvas.getContext('2d');
+    const track = canvas.parentElement;
+    let pdfDoc = null, pageNum = 1, animating = false;
+
+    function renderFirst(n) {
+      pdfDoc.getPage(n).then(page => {
+        const vp = page.getViewport({ scale: 2 });
+        canvas.width = vp.width; canvas.height = vp.height;
+        page.render({ canvasContext: ctx, viewport: vp }).promise.then(() => {
+          infoEl.textContent = `${n} / ${pdfDoc.numPages}`;
+        });
+      });
+    }
+
+    function slideTo(n, dir) {
+      if (!pdfDoc || animating || n < 1 || n > pdfDoc.numPages) return;
+      animating = true;
+      const ease = `${SLIDE_DUR}ms cubic-bezier(0.25, 0.46, 0.45, 0.94)`;
+      pdfDoc.getPage(n).then(page => {
+        const vp  = page.getViewport({ scale: 2 });
+        const inc = document.createElement('canvas');
+        inc.width = vp.width; inc.height = vp.height;
+        page.render({ canvasContext: inc.getContext('2d'), viewport: vp }).promise.then(() => {
+          track.style.height = canvas.offsetHeight + 'px';
+          canvas.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:auto;';
+          inc.style.cssText    = `position:absolute;top:0;left:0;width:100%;height:auto;transform:translateX(${dir==='next'?'100%':'-100%'});`;
+          track.appendChild(inc);
+          requestAnimationFrame(() => requestAnimationFrame(() => {
+            canvas.style.transition = `transform ${ease}`;
+            canvas.style.transform  = dir === 'next' ? 'translateX(-100%)' : 'translateX(100%)';
+            inc.style.transition    = `transform ${ease}`;
+            inc.style.transform     = 'translateX(0)';
+            setTimeout(() => {
+              canvas.width = vp.width; canvas.height = vp.height;
+              canvas.getContext('2d').drawImage(inc, 0, 0);
+              canvas.removeAttribute('style');
+              track.style.height = '';
+              inc.remove();
+              pageNum = n;
+              infoEl.textContent = `${n} / ${pdfDoc.numPages}`;
+              animating = false;
+            }, SLIDE_DUR + 20);
+          }));
+        });
+      });
+    }
+
+    pdfjsLib.getDocument(pdfPath).promise.then(doc => { pdfDoc = doc; renderFirst(1); });
+    prevBtn.addEventListener('click', e => { e.stopPropagation(); slideTo(pageNum - 1, 'prev'); });
+    nextBtn.addEventListener('click', e => { e.stopPropagation(); slideTo(pageNum + 1, 'next'); });
+  }
+
+  const reportEl = card.querySelector('#ihj-report');
+  const slidesEl = card.querySelector('#ihj-slides');
+
+  initPdfViewer('ihj-report-canvas', 'Portfolio Docs/IHJ-report.pdf',
+    reportEl.querySelector('.ihj-prev'), reportEl.querySelector('.ihj-next'), reportEl.querySelector('.ihj-info'));
+
+  initPdfViewer('ihj-slides-canvas', 'Portfolio Docs/IHJ-slides.pdf',
+    slidesEl.querySelector('.ihj-prev'), slidesEl.querySelector('.ihj-next'), slidesEl.querySelector('.ihj-info'));
+})();
+
+// ── Define image lightbox ─────────────────────────────────────────────
+(function () {
+  const overlay  = document.createElement('div');
+  overlay.className = 'define-lightbox';
+  overlay.innerHTML = '<img class="define-lightbox__img" src="" alt=""><button class="define-lightbox__close" aria-label="Close">&times;</button>';
+  document.body.appendChild(overlay);
+
+  const lbImg    = overlay.querySelector('.define-lightbox__img');
+  const closeBtn = overlay.querySelector('.define-lightbox__close');
+
+  function open(src, alt) {
+    lbImg.src = src;
+    lbImg.alt = alt;
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function close() {
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('.ops-define-images img').forEach(img => {
+    img.addEventListener('click', e => { e.stopPropagation(); open(img.src, img.alt); });
+  });
+
+  overlay.addEventListener('click', close);
+  closeBtn.addEventListener('click', e => { e.stopPropagation(); close(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
 })();

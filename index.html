@@ -118,6 +118,7 @@
         <div class="container">
           <p class="section-label">Portfolio</p>
           <h2 class="section-title">Social Media</h2>
+          <p class="section-description">Social media coordinator for Cal Poly Roller Hockey, where I create and schedule game-day graphics, recap posts, and promotional content to build the team's presence and keep fans engaged throughout the season.</p>
         </div>
         <div class="carousel-wrapper" data-per-view="4">
           <button class="carousel-btn carousel-btn--prev" aria-label="Previous">&#8249;</button>
@@ -171,6 +172,7 @@
         <div class="container">
           <p class="section-label">Portfolio</p>
           <h2 class="section-title">Brand Work</h2>
+          <div class="brand-view">
           <div class="brand-grid">
 
             <div class="brand-panel" tabindex="0">
@@ -257,10 +259,152 @@
             </div>
 
           </div>
+
+          <div class="brand-display" id="brand-display" style="display:none">
+            <div class="brand-display__body"></div>
+          </div>
+
+          </div><!-- /.brand-view -->
         </div>
         <div class="section-wave">
           <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0,40 C360,0 1080,60 1440,20 L1440,60 L0,60 Z" fill="#143032"/>
+            <path d="M0,40 C360,0 1080,60 1440,20 L1440,60 L0,60 Z" fill="#F2F4F4"/>
+          </svg>
+        </div>
+      </section>
+
+      <!-- Class Projects -->
+      <section class="portfolio-section projects-section" id="projects">
+        <div class="container">
+          <p class="section-label">Portfolio</p>
+          <h2 class="section-title">Class Projects</h2>
+          <div class="project-view">
+          <div class="projects-grid">
+
+            <div class="project-card project-card--library" tabindex="0">
+              <div class="project-card__face">
+                <div class="project-card__visual">
+                  <div class="project-card__visual-text">
+                    <p class="project-card__eyebrow">Design Thinking</p>
+                    <h3 class="project-card__heading">Campus Library<br>Redesign</h3>
+                  </div>
+                </div>
+                <div class="project-card__info">
+                  <h3 class="project-card__title">Campus Library Redesign</h3>
+                  <p class="project-card__tag">Design Thinking</p>
+                </div>
+              </div>
+              <div class="project-card__detail">
+                <p class="project-detail__desc">As part of a Design Thinking course, this project centered on reimagining the Cal Poly campus library as a more inclusive, student-centered space. Working through each phase of the design thinking process, the team conducted interviews, identified pain points, and developed concepts to improve the library experience for a range of student needs.</p>
+                <div class="project-detail__content">
+                  <div class="ops-define-images">
+                    <img src="Portfolio Docs/OpS-define1.jpg" alt="Define phase 1">
+                    <img src="Portfolio Docs/OpS-define2.jpg" alt="Define phase 2">
+                  </div>
+                  <div class="ops-slideshow">
+                    <div class="ops-slide-track">
+                      <img src="Portfolio Docs/OpS-Pro1.jpg" alt="Project slide 1" id="ops-slide-img">
+                    </div>
+                    <div class="ops-controls">
+                      <button class="ops-prev">&#8249;</button>
+                      <span class="ops-page-info">1 / 5</span>
+                      <button class="ops-next">&#8250;</button>
+                    </div>
+                  </div>
+                </div>
+                <button class="project-back-btn">&#8592; Back to all</button>
+              </div>
+            </div>
+
+            <div class="project-card project-card--ihj" tabindex="0">
+              <div class="project-card__face">
+                <div class="project-card__visual">
+                  <div class="project-card__visual-text">
+                    <p class="project-card__eyebrow">Entrepreneurial Strategy</p>
+                    <h3 class="project-card__heading">I Heart Jane<br>Company Case Study</h3>
+                  </div>
+                </div>
+                <div class="project-card__info">
+                  <h3 class="project-card__title">I Heart Jane Company Case Study</h3>
+                  <p class="project-card__tag">Entrepreneurial Strategy</p>
+                </div>
+              </div>
+              <div class="project-card__detail">
+                <p class="project-detail__desc">A company case study on I Heart Jane, a cannabis marketplace platform connecting dispensaries with consumers. This project examined the company's business model, competitive positioning, and growth strategy, resulting in a detailed written report and accompanying presentation developed for an Entrepreneurial Strategy course.</p>
+                <div class="project-detail__content ihj-content">
+                  <div class="ihj-pdf-viewer" id="ihj-report">
+                    <div class="ihj-slide-track">
+                      <canvas id="ihj-report-canvas"></canvas>
+                    </div>
+                    <div class="ihj-controls">
+                      <button class="ihj-prev">&#8249;</button>
+                      <span class="ihj-info">1 / ?</span>
+                      <button class="ihj-next">&#8250;</button>
+                    </div>
+                  </div>
+                  <div class="ihj-pdf-viewer" id="ihj-slides">
+                    <div class="ihj-slide-track">
+                      <canvas id="ihj-slides-canvas"></canvas>
+                    </div>
+                    <div class="ihj-controls">
+                      <button class="ihj-prev">&#8249;</button>
+                      <span class="ihj-info">1 / ?</span>
+                      <button class="ihj-next">&#8250;</button>
+                    </div>
+                  </div>
+                </div>
+                <button class="project-back-btn">&#8592; Back to all</button>
+              </div>
+            </div>
+
+            <div class="project-card" tabindex="0">
+              <div class="project-card__face">
+                <div class="project-card__visual"></div>
+                <div class="project-card__info">
+                  <h3 class="project-card__title"><!-- REPLACE: Project title --></h3>
+                  <p class="project-card__tag"><!-- REPLACE: Course name --></p>
+                </div>
+              </div>
+              <div class="project-card__detail">
+                <p><!-- REPLACE: Project description --></p>
+                <button class="project-back-btn">&#8592; Back to all</button>
+              </div>
+            </div>
+
+            <div class="project-card" tabindex="0">
+              <div class="project-card__face">
+                <div class="project-card__visual"></div>
+                <div class="project-card__info">
+                  <h3 class="project-card__title"><!-- REPLACE: Project title --></h3>
+                  <p class="project-card__tag"><!-- REPLACE: Course name --></p>
+                </div>
+              </div>
+              <div class="project-card__detail">
+                <p><!-- REPLACE: Project description --></p>
+                <button class="project-back-btn">&#8592; Back to all</button>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="project-panel" id="project-panel" style="display:none">
+            <div class="project-panel__inner">
+              <div class="project-panel__header">
+                <div>
+                  <h2 class="project-panel__title"></h2>
+                  <p class="project-panel__tag"></p>
+                </div>
+              </div>
+              <div class="project-panel__body"></div>
+            </div>
+          </div>
+
+          </div><!-- /.project-view -->
+
+        </div>
+        <div class="section-wave">
+          <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z" fill="#143032"/>
           </svg>
         </div>
       </section>

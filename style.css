@@ -1297,17 +1297,14 @@ section[id] {
   margin-top: 1.5rem;
 }
 
-.sticker-placeholder {
+.sticker-grid img {
+  width: 100%;
   aspect-ratio: 1;
+  object-fit: contain;
   border-radius: 12px;
+  display: block;
+  background: var(--color-bg-alt);
 }
-
-.sticker-placeholder--1 { background: linear-gradient(135deg, #143032, #3D9198); }
-.sticker-placeholder--2 { background: linear-gradient(135deg, #1e5459, #52adb5); }
-.sticker-placeholder--3 { background: linear-gradient(135deg, #3D9198, #8ed8de); }
-.sticker-placeholder--4 { background: linear-gradient(135deg, #0a1b1c, #1e5459); }
-.sticker-placeholder--5 { background: linear-gradient(135deg, #52adb5, #143032); }
-.sticker-placeholder--6 { background: linear-gradient(135deg, #3D9198, #0a1b1c); }
 
 @media (max-width: 768px) {
   .sticker-grid { grid-template-columns: repeat(2, 1fr); }

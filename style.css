@@ -647,7 +647,7 @@ section[id] {
 .brand-panel__thumb img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   display: block;
 }
 
@@ -663,7 +663,7 @@ section[id] {
 .brand-grid.has-expanded { grid-template-columns: 1fr; }
 
 .brand-panel.expanded .brand-panel__detail {
-  max-height: 500px;
+  max-height: 600px;
   opacity: 1;
   margin-top: 1.5rem;
   padding-top: 1.5rem;
@@ -673,7 +673,7 @@ section[id] {
 
 .brand-panel__images {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 1rem;
 }
 
@@ -703,6 +703,175 @@ section[id] {
   object-fit: cover;
   border-radius: 8px;
   display: block;
+}
+
+/* Roguewave thumb: show full logo, no circle crop */
+.brand-panel--roguewave .brand-panel__thumb {
+  border-radius: 8px;
+  background: transparent;
+}
+
+/* SLO Thrift thumb: rounded rectangle, warm white background */
+.brand-panel--slo-thrift .brand-panel__thumb {
+  border-radius: 14px;
+  background: #fffdf7;
+}
+
+/* Logo comparison: stacked logos on left, workflow image on right */
+.brand-comparison {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: 1.5rem;
+  width: 100%;
+  align-items: center;
+}
+.brand-comparison__stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.brand-comparison__item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.brand-comparison__item figcaption {
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  opacity: 0.7;
+}
+.brand-comparison__item img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  object-fit: contain;
+  background: #fffdf7;
+}
+.brand-comparison__workflow {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  object-fit: contain;
+  display: block;
+}
+
+/* C2M thumb: white background */
+.brand-panel--c2m .brand-panel__thumb {
+  background: #ffffff;
+}
+
+/* C2M expanded: same side-by-side layout as Roguewave */
+.brand-panel--c2m.expanded {
+  flex-wrap: nowrap;
+  align-items: flex-start;
+}
+.brand-panel--c2m.expanded .brand-panel__text { flex: 0 0 38%; }
+.brand-panel--c2m.expanded .brand-panel__logo-below { display: block; }
+.brand-panel--c2m.expanded .brand-panel__thumb { display: none; }
+.brand-panel--c2m.expanded .brand-panel__detail {
+  flex: 1;
+  width: auto;
+  max-height: 800px;
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Slide viewer */
+.c2m-slide-viewer { width: 100%; }
+.c2m-slide-track {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(20, 48, 50, 0.15);
+}
+.c2m-slide-track canvas {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.c2m-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 0.75rem;
+}
+.c2m-prev, .c2m-next {
+  background: var(--color-primary);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  font-size: 1.5rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.c2m-prev:hover, .c2m-next:hover { background: var(--color-accent); }
+.c2m-page-info {
+  font-size: 0.8rem;
+  color: var(--color-text);
+  opacity: 0.65;
+  min-width: 3rem;
+  text-align: center;
+}
+
+/* === Roguewave custom expanded layout === */
+.brand-panel__logo-below {
+  display: none;
+  width: 110px;
+  height: auto;
+  object-fit: contain;
+  margin-top: 1.25rem;
+}
+
+.brand-panel--roguewave.expanded {
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+.brand-panel--roguewave.expanded .brand-panel__text {
+  flex: 0 0 38%;
+}
+
+.brand-panel--roguewave.expanded .brand-panel__logo-below {
+  display: block;
+}
+
+.brand-panel--roguewave.expanded .brand-panel__thumb {
+  display: none;
+}
+
+.brand-panel--roguewave.expanded .brand-panel__detail {
+  flex: 1;
+  width: auto;
+  max-height: 800px;
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.brand-panel--roguewave.expanded .brand-panel__detail img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  object-fit: contain;
 }
 
 @media (max-width: 768px) {

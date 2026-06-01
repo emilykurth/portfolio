@@ -27,11 +27,15 @@ navMenu.querySelectorAll('.nav-link').forEach(link => {
 const pageSections = document.querySelectorAll('main section[id]');
 const allNavLinks = document.querySelectorAll('.nav-link');
 
+// Portfolio sub-sections all map to the #portfolio nav link
+const portfolioIds = new Set(['social-media', 'graphic-design', 'brand-work']);
+
 const sectionObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       allNavLinks.forEach(link => link.classList.remove('active'));
-      const active = document.querySelector(`.nav-link[href="#${entry.target.id}"]`);
+      const id = portfolioIds.has(entry.target.id) ? 'portfolio' : entry.target.id;
+      const active = document.querySelector(`.nav-link[href="#${id}"]`);
       if (active) active.classList.add('active');
     }
   });
@@ -341,3 +345,85 @@ function initBrandPanels() {
 }
 
 initBrandPanels();
+
+// ── Color2Me PDF slide viewer ────────────────────────────────────────
+(function () {
+  const panel    = document.querySelector('.brand-panel--c2m');
+  const canvas   = document.getElementById('c2m-canvas');
+  if (!panel || !canvas || typeof pdfjsLib === 'undefined') return;
+
+  const ctx      = canvas.getContext('2d');
+  const track    = canvas.parentElement; // .c2m-slide-track
+  const prevBtn  = panel.querySelector('.c2m-prev');
+  const nextBtn  = panel.querySelector('.c2m-next');
+  const pageInfo = panel.querySelector('.c2m-page-info');
+  let pdfDoc = null, pageNum = 1, animating = false;
+  const SLIDE_DUR = 380; // ms
+
+  function renderFirst(n) {
+    pdfDoc.getPage(n).then(page => {
+      const vp = page.getViewport({ scale: 2 });
+      canvas.width = vp.width; canvas.height = vp.height;
+      page.render({ canvasContext: ctx, viewport: vp }).promise.then(() => {
+        pageInfo.textContent = `${n} / ${pdfDoc.numPages}`;
+      });
+    });
+  }
+
+  function slideTo(n, dir) {
+    if (!pdfDoc || animating || n < 1 || n > pdfDoc.numPages) return;
+    animating = true;
+
+    const ease = `${SLIDE_DUR}ms cubic-bezier(0.25, 0.46, 0.45, 0.94)`;
+
+    // Render incoming slide first, then start both animations simultaneously — no gap
+    pdfDoc.getPage(n).then(page => {
+      const vp = page.getViewport({ scale: 2 });
+      const inc = document.createElement('canvas');
+      inc.width = vp.width; inc.height = vp.height;
+
+      page.render({ canvasContext: inc.getContext('2d'), viewport: vp }).promise.then(() => {
+        // Lock track height and absolutely position both canvases
+        track.style.height = canvas.offsetHeight + 'px';
+        canvas.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:auto;';
+        inc.style.cssText    = `position:absolute;top:0;left:0;width:100%;height:auto;transform:translateX(${dir==='next'?'100%':'-100%'});`;
+        track.appendChild(inc);
+
+        // Two rAFs: first registers initial state, second triggers transition
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          canvas.style.transition = `transform ${ease}`;
+          canvas.style.transform  = dir === 'next' ? 'translateX(-100%)' : 'translateX(100%)';
+          inc.style.transition    = `transform ${ease}`;
+          inc.style.transform     = 'translateX(0)';
+
+          setTimeout(() => {
+            // Blit incoming onto main canvas, restore normal flow
+            canvas.width = vp.width; canvas.height = vp.height;
+            canvas.getContext('2d').drawImage(inc, 0, 0);
+            canvas.removeAttribute('style');
+            track.style.height = '';
+            inc.remove();
+            pageNum = n;
+            pageInfo.textContent = `${n} / ${pdfDoc.numPages}`;
+            animating = false;
+          }, SLIDE_DUR + 20);
+        }));
+      });
+    });
+  }
+
+  // Load PDF on first expand
+  let loaded = false;
+  new MutationObserver(() => {
+    if (panel.classList.contains('expanded') && !loaded) {
+      loaded = true;
+      pdfjsLib.getDocument('Portfolio Docs/Situation Analysis-C2M.pdf').promise.then(doc => {
+        pdfDoc = doc;
+        renderFirst(1);
+      });
+    }
+  }).observe(panel, { attributes: true, attributeFilter: ['class'] });
+
+  prevBtn.addEventListener('click', e => { e.stopPropagation(); slideTo(pageNum - 1, 'prev'); });
+  nextBtn.addEventListener('click', e => { e.stopPropagation(); slideTo(pageNum + 1, 'next'); });
+})();

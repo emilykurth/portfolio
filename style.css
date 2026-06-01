@@ -334,8 +334,8 @@ section[id] {
   padding: 1.5rem;
   border-radius: 8px;
   overflow: hidden;
-  transition: box-shadow 0.5s ease-in-out;
-  cursor: default;
+  transition: box-shadow 0.4s ease-in-out 0.5s; /* holds for 0.5s before fading */
+  cursor: pointer;
 }
 .edu-box::after {
   content: '';
@@ -353,6 +353,7 @@ section[id] {
 
 .edu-box:hover,
 .edu-box:focus-within {
+  transition: box-shadow 0.4s ease-in-out; /* no delay when gaining shadow */
   box-shadow: 0 6px 24px rgba(61, 145, 152, 0.4);
 }
 
@@ -379,7 +380,9 @@ section[id] {
   max-height: 0;
   margin-top: 0;
   overflow: hidden;
-  transition: max-height 1s ease-in-out, padding-top 1s ease-in-out, padding-bottom 1s ease-in-out, margin-top 1s ease-in-out;
+  /* 0.5s delay before collapsing — prevents glitch when moving quickly between boxes */
+  transition: max-height 1s ease-in-out 0.5s, padding-top 1s ease-in-out 0.5s,
+              padding-bottom 1s ease-in-out 0.5s, margin-top 1s ease-in-out 0.5s;
   font-size: 0.875rem;
   line-height: 1.6;
   opacity: 0.9;
@@ -387,6 +390,9 @@ section[id] {
 
 .edu-box:hover .edu-box__dropdown,
 .edu-box:focus-within .edu-box__dropdown {
+  /* No delay when opening — expands immediately on hover */
+  transition: max-height 1s ease-in-out, padding-top 1s ease-in-out,
+              padding-bottom 1s ease-in-out, margin-top 1s ease-in-out;
   max-height: 200px;
   padding-top: 0.75rem;
   margin-top: 0.5rem;
@@ -448,30 +454,36 @@ section[id] {
   top: 50%;
   transform: translateY(-50%);
   z-index: 20;
-  background: var(--color-btn-overlay);
+  background: var(--color-primary);
   color: #fff;
   border: none;
-  width: 48px;
-  height: 48px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
-  font-size: 1.75rem;
+  font-size: 2.25rem;
   line-height: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background 0.2s, box-shadow 0.2s;
   user-select: none;
+  box-shadow: 0 4px 18px rgba(20, 48, 50, 0.35);
+  opacity: 0.55;
 }
 
-.carousel-btn:hover { background: var(--color-primary); }
-.carousel-btn--prev { left: 1.25rem; }
-.carousel-btn--next { right: 1.25rem; }
+.carousel-btn:hover {
+  background: var(--color-accent);
+  box-shadow: 0 6px 24px rgba(20, 48, 50, 0.45);
+  opacity: 1;
+}
+.carousel-btn--prev { left: 1.5rem; }
+.carousel-btn--next { right: 1.5rem; }
 
 /* Social Media — 4-per-view sliding track */
 #social-media .carousel-wrapper {
   height: auto;
-  padding: 0 3.5rem;
+  padding: 0 5.5rem;
   box-sizing: border-box;
 }
 
@@ -488,9 +500,9 @@ section[id] {
   width: auto;
   height: 420px;
   transform: none;
-  opacity: 1;
   top: auto;
   left: auto;
+  transition: opacity 0.4s ease;
 }
 #social-media .carousel-item img {
   height: 100%;
@@ -502,8 +514,8 @@ section[id] {
 /* Graphic Design — same sliding-track layout as Social Media */
 #graphic-design .carousel-wrapper {
   height: auto;
-  min-height: 480px; /* 420px image + ~60px caption — section pre-sized, never grows */
-  padding: 0 3.5rem;
+  min-height: 480px;
+  padding: 0 5.5rem;
   box-sizing: border-box;
 }
 #graphic-design .carousel-track {
@@ -514,17 +526,17 @@ section[id] {
   height: auto;
 }
 #graphic-design .carousel-item {
-  position: relative; /* needed for z-index to take effect */
+  position: relative;
   flex: 0 0 auto;
   width: auto;
   height: auto;
   transform: none;
-  opacity: 1;
   top: auto;
   left: auto;
   cursor: pointer;
   overflow: visible;
   z-index: 0;
+  transition: transform 0.3s ease, opacity 0.4s ease;
 }
 #graphic-design .carousel-item {
   transition: transform 0.3s ease;
@@ -565,7 +577,7 @@ section[id] {
 
 @media (max-width: 768px) {
   #social-media .carousel-wrapper,
-  #graphic-design .carousel-wrapper { padding: 0 2.5rem; }
+  #graphic-design .carousel-wrapper { padding: 0 3.5rem; }
   #social-media .carousel-item,
   #graphic-design .carousel-item { height: 240px; }
 }
@@ -643,8 +655,8 @@ section[id] {
   max-height: 0;
   overflow: hidden;
   opacity: 0;
-  transition: max-height 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-              opacity 0.4s ease;
+  transition: max-height 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              opacity 0.6s ease;
 }
 
 .brand-grid.has-expanded { grid-template-columns: 1fr; }

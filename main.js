@@ -125,16 +125,7 @@ function initCarousel(wrapper) {
     const next = () => { if (curIdx < all.length - 1) goTo(curIdx + 1); };
     bindButtonsAndKeys(prev, next);
 
-    let snapTimer;
-    wrapper.addEventListener('wheel', (e) => {
-      e.preventDefault();
-      const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
-      const s = sw() || 1;
-      px = Math.max(-3 * s, Math.min(0, px - delta));
-      setTr(false);
-      clearTimeout(snapTimer);
-      snapTimer = setTimeout(snap, 150);
-    }, { passive: false });
+    // Wheel scroll intentionally removed — navigate with arrow buttons only.
 
     // Init after images have loaded (widths depend on loaded images)
     // Click-to-expand: track active real index so all three copies stay in sync
@@ -166,12 +157,12 @@ function initCarousel(wrapper) {
 
     // Debounce init: goTo fires once after all image-load events settle so
     // xOf(n) is fully computed before positioning (avoids starting off-center).
-    let ready = false, userScrolled = false, initTimer;
+    let ready = false, initTimer;
     const tryInit = () => {
       fixWidths();
       clearTimeout(initTimer);
       initTimer = setTimeout(() => {
-        if (sw() > 0 && !userScrolled) { goTo(n, false); ready = true; }
+        if (sw() > 0) { goTo(n, false); ready = true; }
       }, 60);
     };
     all.forEach(el => {
@@ -180,7 +171,6 @@ function initCarousel(wrapper) {
     });
     tryInit();
 
-    wrapper.addEventListener('wheel', () => { userScrolled = true; }, { passive: true, once: true });
     window.addEventListener('resize', () => { if (ready) { fixWidths(); goTo(n, false); } });
     return;
   }
@@ -230,7 +220,7 @@ function initBrandPanels() {
   const grid = document.querySelector('.brand-grid');
   if (!grid) return;
   const panels = Array.from(grid.querySelectorAll('.brand-panel'));
-  const DUR = '0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+  const DUR = '0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
 
   // FLIP the entire panel from its old screen position to its new one,
   // while also animating its width. Each panel's starting position in the
@@ -296,10 +286,11 @@ function initBrandPanels() {
     panels.forEach(p => p.classList.remove('hidden'));
     grid.classList.remove('has-expanded');
 
-    // Measure where the expanded panel ended up in the restored grid
-    const r1 = expanded.getBoundingClientRect();
-    const dx  = r0.left - r1.left;
-    const dy  = r0.top  - r1.top;
+    // Measure where the panel landed and its true column width after reflow
+    const r1          = expanded.getBoundingClientRect();
+    const targetWidth = expanded.offsetWidth; // actual 1fr column width in px
+    const dx          = r0.left - r1.left;
+    const dy          = r0.top  - r1.top;
 
     // FLIP: push the expanded panel back to its old (full-width) position
     expanded.style.zIndex     = '10';
@@ -309,10 +300,10 @@ function initBrandPanels() {
 
     expanded.getBoundingClientRect(); // single reflow commits all pending states
 
-    // Play: animate the expanded panel home and fade the others in simultaneously
+    // Mirror the open: slide position AND shrink width together
     expanded.style.transition = `transform ${DUR}, max-width ${DUR}`;
     expanded.style.transform  = '';
-    expanded.style.maxWidth   = '100%';
+    expanded.style.maxWidth   = targetWidth + 'px';
 
     others.forEach(p => {
       p.style.transition = `opacity ${DUR}`;

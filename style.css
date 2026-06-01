@@ -1282,6 +1282,37 @@ section[id] {
   .recipe-content { grid-template-columns: 1fr; }
 }
 
+/* === Sticker Imposition project card === */
+.project-card--sticker .project-card__visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.project-card--sticker:not(.expanded) .project-card__info { display: none; }
+
+.sticker-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.sticker-placeholder {
+  aspect-ratio: 1;
+  border-radius: 12px;
+}
+
+.sticker-placeholder--1 { background: linear-gradient(135deg, #143032, #3D9198); }
+.sticker-placeholder--2 { background: linear-gradient(135deg, #1e5459, #52adb5); }
+.sticker-placeholder--3 { background: linear-gradient(135deg, #3D9198, #8ed8de); }
+.sticker-placeholder--4 { background: linear-gradient(135deg, #0a1b1c, #1e5459); }
+.sticker-placeholder--5 { background: linear-gradient(135deg, #52adb5, #143032); }
+.sticker-placeholder--6 { background: linear-gradient(135deg, #3D9198, #0a1b1c); }
+
+@media (max-width: 768px) {
+  .sticker-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
 /* === Library project expanded detail === */
 .project-detail__desc {
   color: var(--color-text);

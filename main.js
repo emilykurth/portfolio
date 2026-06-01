@@ -574,6 +574,69 @@ if (window.matchMedia('(pointer: coarse)').matches) {
     slidesEl.querySelector('.ihj-prev'), slidesEl.querySelector('.ihj-next'), slidesEl.querySelector('.ihj-info'));
 })();
 
+// ── Recipe Booklet PDF viewer ─────────────────────────────────────────
+(function () {
+  const card = document.querySelector('.project-card--recipe');
+  if (!card || typeof pdfjsLib === 'undefined') return;
+
+  const SLIDE_DUR = 380;
+  const canvas    = document.getElementById('recipe-canvas');
+  if (!canvas) return;
+  const ctx       = canvas.getContext('2d');
+  const track     = canvas.parentElement;
+  const prevBtn   = card.querySelector('.recipe-prev');
+  const nextBtn   = card.querySelector('.recipe-next');
+  const infoEl    = card.querySelector('.recipe-info');
+  let pdfDoc = null, pageNum = 1, animating = false;
+
+  function renderFirst(n) {
+    pdfDoc.getPage(n).then(page => {
+      const vp = page.getViewport({ scale: 2 });
+      canvas.width = vp.width; canvas.height = vp.height;
+      page.render({ canvasContext: ctx, viewport: vp }).promise.then(() => {
+        infoEl.textContent = `${n} / ${pdfDoc.numPages}`;
+      });
+    });
+  }
+
+  function slideTo(n, dir) {
+    if (!pdfDoc || animating || n < 1 || n > pdfDoc.numPages) return;
+    animating = true;
+    const ease = `${SLIDE_DUR}ms cubic-bezier(0.25, 0.46, 0.45, 0.94)`;
+    pdfDoc.getPage(n).then(page => {
+      const vp  = page.getViewport({ scale: 2 });
+      const inc = document.createElement('canvas');
+      inc.width = vp.width; inc.height = vp.height;
+      page.render({ canvasContext: inc.getContext('2d'), viewport: vp }).promise.then(() => {
+        track.style.height = canvas.offsetHeight + 'px';
+        canvas.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:auto;';
+        inc.style.cssText    = `position:absolute;top:0;left:0;width:100%;height:auto;transform:translateX(${dir==='next'?'100%':'-100%'});`;
+        track.appendChild(inc);
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          canvas.style.transition = `transform ${ease}`;
+          canvas.style.transform  = dir === 'next' ? 'translateX(-100%)' : 'translateX(100%)';
+          inc.style.transition    = `transform ${ease}`;
+          inc.style.transform     = 'translateX(0)';
+          setTimeout(() => {
+            canvas.width = vp.width; canvas.height = vp.height;
+            canvas.getContext('2d').drawImage(inc, 0, 0);
+            canvas.removeAttribute('style');
+            track.style.height = '';
+            inc.remove();
+            pageNum = n;
+            infoEl.textContent = `${n} / ${pdfDoc.numPages}`;
+            animating = false;
+          }, SLIDE_DUR + 20);
+        }));
+      });
+    });
+  }
+
+  pdfjsLib.getDocument('Portfolio Docs/Recipe.pdf').promise.then(doc => { pdfDoc = doc; renderFirst(1); });
+  prevBtn.addEventListener('click', e => { e.stopPropagation(); slideTo(pageNum - 1, 'prev'); });
+  nextBtn.addEventListener('click', e => { e.stopPropagation(); slideTo(pageNum + 1, 'next'); });
+})();
+
 // ── Define image lightbox ─────────────────────────────────────────────
 (function () {
   const overlay  = document.createElement('div');

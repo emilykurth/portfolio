@@ -481,6 +481,22 @@ section[id] {
 .carousel-btn--prev { left: 1.5rem; }
 .carousel-btn--next { right: 1.5rem; }
 
+/* Social Media buttons — white circles, fully opaque, high contrast */
+#social-media .carousel-btn {
+  background: #ffffff;
+  color: var(--color-primary);
+  opacity: 1;
+  width: 72px;
+  height: 72px;
+  font-size: 2.75rem;
+  box-shadow: 0 4px 24px rgba(20, 48, 50, 0.22), 0 0 0 2px rgba(20, 48, 50, 0.08);
+}
+#social-media .carousel-btn:hover {
+  background: var(--color-accent);
+  color: #fff;
+  box-shadow: 0 6px 32px rgba(61, 145, 152, 0.45), 0 0 0 2px transparent;
+}
+
 /* Social Media — 4-per-view sliding track */
 #social-media .carousel-wrapper {
   height: auto;

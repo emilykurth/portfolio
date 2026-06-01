@@ -564,6 +564,7 @@ section[id] {
   padding: 0 1rem;
   box-sizing: border-box;
   border-radius: 0 0 20px 20px;
+  text-align: center;
 }
 .gd-caption p {
   white-space: nowrap;

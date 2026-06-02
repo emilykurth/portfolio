@@ -662,14 +662,12 @@ if (window.matchMedia('(pointer: coarse)').matches) {
     img.addEventListener('click', e => { e.stopPropagation(); open(img.src, img.alt); });
   });
 
-  // Social media carousel — attach directly to all images (originals + clones)
-  // initCarousel has already run by this point, so all clones exist in the DOM
-  document.querySelectorAll('#social-media .carousel-item img').forEach(img => {
-    img.addEventListener('click', e => {
-      e.stopImmediatePropagation();
-      open(img.src, img.alt);
-    });
-  });
+  // Social media carousel — capture phase so nothing can block it
+  document.addEventListener('click', e => {
+    if (e.target.tagName !== 'IMG') return;
+    if (!e.target.closest('#social-media .carousel-item')) return;
+    open(e.target.src, e.target.alt);
+  }, true);
 
   overlay.addEventListener('click', close);
   closeBtn.addEventListener('click', e => { e.stopPropagation(); close(); });

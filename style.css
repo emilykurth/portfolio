@@ -533,7 +533,10 @@ section[id] {
   width: auto;
   max-width: none;
   object-fit: fill;
+  cursor: zoom-in;
+  transition: opacity 0.2s ease;
 }
+#social-media .carousel-item:hover img { opacity: 0.88; }
 
 /* Graphic Design — same sliding-track layout as Social Media */
 #graphic-design .carousel-wrapper {
@@ -1044,9 +1047,18 @@ section[id] {
   background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
 }
 
-.project-card:nth-child(2) .project-card__visual { background: linear-gradient(135deg, #1e5459, #52adb5); }
-.project-card:nth-child(3) .project-card__visual { background: linear-gradient(135deg, #3D9198, #8ed8de); }
-.project-card:nth-child(4) .project-card__visual { background: linear-gradient(135deg, #0a1b1c, #1e5459); }
+.project-card:nth-child(2) .project-card__visual {
+  background: linear-gradient(rgba(20, 48, 50, 0.65), rgba(20, 48, 50, 0.65)),
+              url('Portfolio Docs/jane-image.jpeg') center/cover no-repeat;
+}
+.project-card:nth-child(3) .project-card__visual {
+  background: linear-gradient(rgba(20, 48, 50, 0.65), rgba(20, 48, 50, 0.65)),
+              url('Portfolio Docs/recipe-image.jpeg') center/cover no-repeat;
+}
+.project-card:nth-child(4) .project-card__visual {
+  background: linear-gradient(rgba(20, 48, 50, 0.65), rgba(20, 48, 50, 0.65)),
+              url('Portfolio Docs/sticker-image.jpeg') center/cover no-repeat;
+}
 
 .project-card.expanded .project-card__visual {
   flex: 0 0 64px;
@@ -1203,6 +1215,8 @@ section[id] {
   display: flex;
   align-items: center;
   justify-content: center;
+  background: linear-gradient(rgba(20, 48, 50, 0.65), rgba(20, 48, 50, 0.65)),
+              url('Portfolio Docs/library-image.jpeg') center/cover no-repeat;
 }
 .project-card__visual-text {
   text-align: center;
@@ -1232,6 +1246,8 @@ section[id] {
   display: flex;
   align-items: center;
   justify-content: center;
+  background: linear-gradient(rgba(20, 48, 50, 0.65), rgba(20, 48, 50, 0.65)),
+              url('Portfolio Docs/jane-image.jpeg') center/cover no-repeat;
 }
 .project-card--ihj:not(.expanded) .project-card__info { display: none; }
 
@@ -1287,6 +1303,8 @@ section[id] {
   display: flex;
   align-items: center;
   justify-content: center;
+  background: linear-gradient(rgba(20, 48, 50, 0.65), rgba(20, 48, 50, 0.65)),
+              url('Portfolio Docs/recipe-image.jpeg') center/cover no-repeat;
 }
 .project-card--recipe:not(.expanded) .project-card__info { display: none; }
 
@@ -1309,6 +1327,8 @@ section[id] {
   display: flex;
   align-items: center;
   justify-content: center;
+  background: linear-gradient(rgba(20, 48, 50, 0.65), rgba(20, 48, 50, 0.65)),
+              url('Portfolio Docs/sticker-image.jpeg') center/cover no-repeat;
 }
 .project-card--sticker:not(.expanded) .project-card__info { display: none; }
 

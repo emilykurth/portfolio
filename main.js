@@ -662,6 +662,15 @@ if (window.matchMedia('(pointer: coarse)').matches) {
     img.addEventListener('click', e => { e.stopPropagation(); open(img.src, img.alt); });
   });
 
+  // Social media carousel — attach directly to all images (originals + clones)
+  // initCarousel has already run by this point, so all clones exist in the DOM
+  document.querySelectorAll('#social-media .carousel-item img').forEach(img => {
+    img.addEventListener('click', e => {
+      e.stopImmediatePropagation();
+      open(img.src, img.alt);
+    });
+  });
+
   overlay.addEventListener('click', close);
   closeBtn.addEventListener('click', e => { e.stopPropagation(); close(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });

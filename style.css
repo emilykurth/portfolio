@@ -1048,15 +1048,15 @@ section[id] {
 }
 
 .project-card:nth-child(2) .project-card__visual {
-  background: linear-gradient(rgba(20, 48, 50, 0.65), rgba(20, 48, 50, 0.65)),
+  background: linear-gradient(135deg, rgba(30, 84, 89, 0.78), rgba(82, 173, 181, 0.62)),
               url('Portfolio Docs/jane-image.jpeg') center/cover no-repeat;
 }
 .project-card:nth-child(3) .project-card__visual {
-  background: linear-gradient(rgba(20, 48, 50, 0.65), rgba(20, 48, 50, 0.65)),
+  background: linear-gradient(135deg, rgba(61, 145, 152, 0.75), rgba(142, 216, 222, 0.58)),
               url('Portfolio Docs/recipe-image.jpeg') center/cover no-repeat;
 }
 .project-card:nth-child(4) .project-card__visual {
-  background: linear-gradient(rgba(20, 48, 50, 0.65), rgba(20, 48, 50, 0.65)),
+  background: linear-gradient(135deg, rgba(10, 27, 28, 0.82), rgba(30, 84, 89, 0.68)),
               url('Portfolio Docs/sticker-image.jpeg') center/cover no-repeat;
 }
 
@@ -1215,7 +1215,7 @@ section[id] {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(rgba(20, 48, 50, 0.65), rgba(20, 48, 50, 0.65)),
+  background: linear-gradient(135deg, rgba(20, 48, 50, 0.78), rgba(61, 145, 152, 0.62)),
               url('Portfolio Docs/library-image.jpeg') center/cover no-repeat;
 }
 .project-card__visual-text {
@@ -1246,7 +1246,7 @@ section[id] {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(rgba(20, 48, 50, 0.65), rgba(20, 48, 50, 0.65)),
+  background: linear-gradient(135deg, rgba(30, 84, 89, 0.78), rgba(82, 173, 181, 0.62)),
               url('Portfolio Docs/jane-image.jpeg') center/cover no-repeat;
 }
 .project-card--ihj:not(.expanded) .project-card__info { display: none; }
@@ -1303,7 +1303,7 @@ section[id] {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(rgba(20, 48, 50, 0.65), rgba(20, 48, 50, 0.65)),
+  background: linear-gradient(135deg, rgba(61, 145, 152, 0.75), rgba(142, 216, 222, 0.58)),
               url('Portfolio Docs/recipe-image.jpeg') center/cover no-repeat;
 }
 .project-card--recipe:not(.expanded) .project-card__info { display: none; }
@@ -1327,7 +1327,7 @@ section[id] {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(rgba(20, 48, 50, 0.65), rgba(20, 48, 50, 0.65)),
+  background: linear-gradient(135deg, rgba(10, 27, 28, 0.82), rgba(30, 84, 89, 0.68)),
               url('Portfolio Docs/sticker-image.jpeg') center/cover no-repeat;
 }
 .project-card--sticker:not(.expanded) .project-card__info { display: none; }
